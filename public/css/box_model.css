@@ -1,0 +1,57 @@
+h1 {
+	color: #613096;
+	text-decoration: underline;
+	margin-left: 30px;
+}
+
+div {
+	padding: 10px;
+	border: 1px solid black;
+	width: 150px;
+	height: 50px;
+	color: #fff;
+}
+
+p {
+	margin-top: 0px;
+}
+
+#redBox {
+	margin: auto auto auto 30px;
+	background-color: #d84231;
+
+}
+
+#orangeBox {
+	margin: auto auto auto 60px;
+	background-color: #eaae33;
+	margin-top: 10px;
+}
+
+#yellowBox {
+	margin: auto auto auto 90px;
+	background-color: #fdf733;
+	margin-top: 10px;
+}
+
+#greenBox {
+	margin: auto auto auto 120px;
+	background-color: #578c05;
+	margin-top: 10px;
+}
+
+#blueBox {
+	margin: auto auto auto 150px;
+	background-color: #234afb;
+	margin-top: 10px;
+}
+
+#purpleBox {
+	margin: auto auto auto 180px;
+	background-color: #df8bf0;
+	margin-top: 10px;
+}
+
+
+
+
