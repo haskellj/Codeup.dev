@@ -1,0 +1,31 @@
+#current {
+	font-weight: bold;
+	font-size: 22px;
+}
+
+#navbar-label {
+	color: #9d9d9d;
+	font-size: 14px;
+}
+
+#headshot {
+	height: 180px;
+	width: 180px;
+	border-radius: 150px;
+	position: relative;
+	top: 25px;
+	margin-right: 25px;
+	float: left;
+}
+
+./*jumbotron h1, p {
+	position: relative;
+	top: 25px;
+	right: 50px;
+	float: right;
+*/
+}
+
+#bottomThing{
+	background-color: #eeeeee;
+}

@@ -1,0 +1,35 @@
+#current {
+	font-weight: bold;
+	font-size: 22px;
+}
+
+.fa {
+	position: absolute;
+	color: #333333
+}
+
+#cap {
+	top: 40px;
+	left: 40px;
+}
+
+#code {
+	top: 32px;
+	left: 48px;
+}
+
+#clock {
+	top: 34px;
+	left: 54px;
+}
+
+/*#body_links {
+	margin-left: auto;
+}*/
+
+footer {
+	clear: both;
+	background-color: #eee;
+	height: 40px;
+	padding: 10px;
+}
