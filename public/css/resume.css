@@ -3,9 +3,23 @@
 	font-size: 22px;
 }
 
+.bodyLinks, .fa {
+	text text-decoration: none;
+	color: #333333;
+}
+
+.bodyLinks:hover {
+	text-decoration: none;
+	color: #3275a1;
+}
+
+.fa:hover {
+	text-decoration: none;
+	color: #3275a1;
+}
+
 .fa {
 	position: absolute;
-	color: #333333
 }
 
 #cap {
@@ -23,13 +37,14 @@
 	left: 54px;
 }
 
-/*#body_links {
-	margin-left: auto;
-}*/
+body {
+	background-image: url(../img/concrete_seamless.png);
+}
 
 footer {
 	clear: both;
-	background-color: #eee;
+	background-color: #222222;
+	color: #fff;
 	height: 40px;
 	padding: 10px;
 }

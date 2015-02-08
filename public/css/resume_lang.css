@@ -77,11 +77,14 @@ li {
 	list-style: square;
 }
 
+body {
+	background-image: url(../img/concrete_seamless.png);
+}
+
 footer {
 	clear: both;
-	background-color: #eee;
+	background-color: #222;
+	color: #fff;
 	height: 40px;
 	padding: 10px;
 }
-
-
