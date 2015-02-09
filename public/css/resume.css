@@ -15,11 +15,15 @@ html {
 }
 
 .img-circle {
-	margin-left: 100px;
+	margin-left: 110px;
 }
 
-.extraMargin {
+/*.extraMargin {
 	margin-left: 80px;
+}*/
+
+h2, p {
+	text-align: center;
 }
 
 .bodyLinks, .fa {

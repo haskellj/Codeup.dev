@@ -17,6 +17,7 @@ html {
 #headshot {
 	height: 180px;
 	width: 180px;
+	border: 2px solid #777;
 	border-radius: 150px;
 	/*position: relative;
 	top: 25px;
@@ -28,10 +29,18 @@ html {
 	position: relative;
 }
 
+#profile_box_container {
+	position: fixed;
+	float: left;
+}
+
 #profile_box {
+	float: left;
 	position: relative;
 	left: 50px;
-	border: 2px solid #333333;
+	/*border: 2px solid #333333;*/
+	border-bottom: 3px solid #777;
+	border-right: 3px solid #777;
 	width: 220px;
 	border-radius: 10px;
 	background-color: #333333;
@@ -65,7 +74,6 @@ html {
 
 #main_h1 {
 	position: relative;
-	left: 7px;
 	padding-bottom: 5px;
 	color: #ffffef;
 }
@@ -77,6 +85,11 @@ html {
 
 .row_padding {
 	padding-top: 25px;
+}
+
+.col-md-8 {
+	position: relative;
+	left: 50px;
 }
 
 .border {

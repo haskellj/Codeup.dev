@@ -8,6 +8,15 @@ html {
 	position: relative;
 }
 
+nav {
+	/*background-color: rgba(0, 0, 0, 0.7)!important;*/
+	opacity: 0.7;
+}
+
+nav:hover {
+	opacity: 0.8;
+}
+
 #current {
 	font-weight: bold;
 	font-size: 22px;
@@ -29,6 +38,22 @@ footer>.container{
 	background-color: #222;
 	padding-top: 5px;
 }
+
+
+.carousel-inner > .item > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/*.active img {
+	display: block;
+	margin: auto;
+}*/
+
+/*.carousel img {
+	background-position: center;
+} */
 
 footer {
 	position: absolute;
