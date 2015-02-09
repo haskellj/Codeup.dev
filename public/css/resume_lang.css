@@ -1,6 +1,17 @@
+body {
+	background-image: url(../img/concrete_seamless.png);
+	margin-bottom: 80px;
+}
+
+html {
+	min-height: 100%;
+	position: relative;
+}
+
 #current {
 	font-weight: bold;
 	font-size: 22px;
+	font-family: 'Kaushan Script', cursive;
 }
 
 #headshot {
@@ -71,20 +82,24 @@
 .border {
 	border: 1px solid #777777;
 	border-radius: 10px;
+	background-color: #ffffef
 }
 
 li {
 	list-style: square;
 }
 
-body {
-	background-image: url(../img/concrete_seamless.png);
+footer>.container{
+	background-color: #222;
+	padding-top: 5px;
 }
 
 footer {
-	clear: both;
-	background-color: #222;
+	position: absolute;
+	bottom: 0px;
+	/*background-color: #222222;*/
 	color: #fff;
 	height: 40px;
+	width: 100%;
 	padding: 10px;
 }

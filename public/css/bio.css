@@ -1,6 +1,20 @@
+body {
+	margin-bottom: 80px;
+}
+
+html {
+	min-height: 100%;
+	position: relative;
+}
+
 #current {
 	font-weight: bold;
 	font-size: 22px;
+	font-family: 'Kaushan Script', cursive;
+}
+
+h2 {
+	font-family: 'Kaushan Script', cursive;
 }
 
 #navbar-label {
@@ -18,6 +32,10 @@
 	float: left;
 }
 
+strong {
+	color: #337ab7;
+}
+
 ./*jumbotron h1, p {
 	position: relative;
 	top: 25px;
@@ -26,6 +44,29 @@
 */
 }
 
-#bottomThing{
-	background-color: #eeeeee;
+
+.bodyLinks {
+	text text-decoration: none;
+	color: #333333;
+}
+
+.bodyLinks:hover {
+	text-decoration: none;
+	color: #333;
+	font-family: 'Kaushan Script', cursive;
+}
+
+footer>.row{
+	background-color: #222;
+	padding-top: 5px;
+}
+
+footer {
+	position: absolute;
+	bottom: 0px;
+	/*background-color: #222222;*/
+	color: #fff;
+	height: 40px;
+	width: 100%;
+	padding: 10px;
 }

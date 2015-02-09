@@ -1,4 +1,41 @@
+body {
+	background-image: url(../img/concrete_seamless.png);
+	margin-bottom: 80px;
+}
+
+html {
+	min-height: 100%;
+	position: relative;
+}
+
 #current {
 	font-weight: bold;
 	font-size: 22px;
+	font-family: 'Kaushan Script', cursive;
+}
+
+.bodyLinks {
+	text text-decoration: none;
+	color: #337ab7;
+	font-family: 'Kaushan Script', cursive;
+}
+
+.bodyLinks:hover {
+	text-decoration: none;
+	color: #333;
+}
+
+footer>.container{
+	background-color: #222;
+	padding-top: 5px;
+}
+
+footer {
+	position: absolute;
+	bottom: 0px;
+	/*background-color: #222222;*/
+	color: #fff;
+	height: 40px;
+	width: 100%;
+	padding: 10px;
 }

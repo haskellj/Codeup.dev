@@ -1,6 +1,25 @@
+body {
+	background-image: url(../img/concrete_seamless.png);
+	margin-bottom: 80px;
+}
+
+html {
+	min-height: 100%;
+	position: relative;
+}
+
 #current {
 	font-weight: bold;
 	font-size: 22px;
+	font-family: 'Kaushan Script', cursive;
+}
+
+.img-circle {
+	margin-left: 100px;
+}
+
+.extraMargin {
+	margin-left: 80px;
 }
 
 .bodyLinks, .fa {
@@ -11,10 +30,10 @@
 .bodyLinks:hover {
 	text-decoration: none;
 	color: #3275a1;
+	font-family: 'Kaushan Script', cursive;
 }
 
 .fa:hover {
-	text-decoration: none;
 	color: #3275a1;
 }
 
@@ -37,14 +56,17 @@
 	left: 54px;
 }
 
-body {
-	background-image: url(../img/concrete_seamless.png);
+footer>.container{
+	background-color: #222;
+	padding-top: 5px;
 }
 
 footer {
-	clear: both;
-	background-color: #222222;
+	position: absolute;
+	bottom: 0px;
+	/*background-color: #222222;*/
 	color: #fff;
 	height: 40px;
+	width: 100%;
 	padding: 10px;
 }
