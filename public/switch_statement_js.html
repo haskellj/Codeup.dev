@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Switch Statement</title>
+</head>
+<body>
+
+	<script type="text/javascript">
+
+
+		var colors = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet'];
+		var color = colors[Math.floor(Math.random()*colors.length)];
+
+		switch (color) {
+			case 'red':
+			case 'orange':
+			case 'yellow':
+			case 'green':
+			case 'blue':
+				console.log('Yay! '+color);
+				break;
+			default: 
+				console.log('Boo! I don\'t like ' +color);
+		}
+
+	</script>
+
+</body>
+</html>
