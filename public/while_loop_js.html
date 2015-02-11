@@ -7,12 +7,30 @@
 
 	<script type="text/javascript">
 
-		var i=2
+// should log all multiples of 2 up to 65536
+		var i=2;
 
 		while (i<=65536){
 			console.log(i);
 			i*=2;
 		}
+
+// should log the sum of all multiples of 3 and 5 that are less than 1000
+		var k = 1;
+		var sum = 0;
+
+		while (k<1000) {
+			if(k%3==0){
+				sum += k;
+
+			} else if(k%5==0){
+				sum += k;
+			} else {
+				// do nothing
+			}			
+			k++;
+		}
+		console.log(sum);
 
 	</script>
 
