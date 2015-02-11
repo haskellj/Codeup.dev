@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Dialog pop-ups</title>
+</head>
+<body>
+
+	<script type="text/javascript">
+
+		var name = prompt("What is your name?");
+			while (name==""){
+				name = prompt("What is your name?");
+			}
+		alert("Welcome " + name +"!");
+
+		var pizza = confirm("Do you like pizza?");
+			if (pizza){
+				console.log("Me too!");
+			} else {
+				alert("Awe, what's wrong with you?")
+			}
+
+
+	</script>
+
+
+</body>
+</html>
