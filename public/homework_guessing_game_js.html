@@ -1,0 +1,50 @@
+<html>
+<head>
+	<title>Guessing Game</title>
+</head>
+<body>
+
+	<script type="text/javascript">
+
+		var play = true;
+
+		while (play){
+
+			var random = Math.floor((Math.random()*100)+1)
+			var guess = prompt("Choose a number between 1 & 100");
+
+			while (guess != random){
+				if (guess == null){
+					break;
+				} else if (guess == ""){
+					alert("You didn't enter anything, please enter a number between 1 & 100");
+					guess = prompt("Choose a number between 1 & 100");
+				} else if (isNaN(guess) || guess < 1 || guess > 100){
+					alert("You must enter a number between 1 & 100");
+					guess = prompt("Choose a number between 1 & 100");
+				} else if (guess < random){
+					alert("Nope, guess higher!");
+					guess = prompt("Choose a number between 1 & 100");
+				} else if (guess > random){
+					alert("Nope, guess lower!");
+					guess = prompt("Choose a number between 1 & 100");
+				} 
+			}
+
+			if (guess == null){
+				break;
+			} else {
+				alert("You got it! The number was " + random);
+				var again = confirm("Would you like to play again?");
+					if(again){
+						play = true;
+					} else {
+						play = false;
+					}
+			}
+		}
+
+	</script>
+
+</body>
+</html>

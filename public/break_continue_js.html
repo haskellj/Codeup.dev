@@ -7,7 +7,40 @@
 
 	<script type="text/javascript">
 
-		var random = Math.floor((Math.random()*50)+1);
+// should print all odd numbers from 1 to 50 using a 'break'.
+
+
+		while(true){
+			var random = Math.floor((Math.random()*50)+1);
+			console.log('ran');
+			if(random % 2 !== 0){
+				break;
+			}
+		}
+
+		console.log("Random odd number to skip is: " + random);
+
+		for (var i=1; i<50; i++){
+			if(i % 2 !==0){
+				if(i === random){
+				console.log("Woops! We're skipping the random number: " + i);
+				} else {
+					console.log("Here is an odd number: " + i);
+				}
+			} else {
+				// do nothing
+			}
+		}
+
+// should print all odd numbers from 1 to 50 using a 'continue'.
+
+		while(true){
+			var random = Math.floor((Math.random()*50)+1);
+			console.log('ran');
+			if(random % 2 !== 0){
+				break;
+			}
+		}
 
 		console.log("Random odd number to skip is: " + random);
 
@@ -21,6 +54,30 @@
 			}
 		}
 
+
+// should print all odd numbers from 1 to 50 using a 'continue' AND a 'break'.
+
+		while(true){
+			var random = Math.floor((Math.random()*50)+1);
+			console.log('ran');
+			if(random % 2 !== 0){
+				break;
+			}
+		}
+		
+		console.log("Random odd number to skip is: " + random);
+
+		for (var i=1; i<55; i++){
+			if(i % 2 ===0){
+				continue;
+			} else if(i === random){
+				console.log("Woops! We're skipping the random number: " + i);
+			} else if(i>50){
+				break;
+			} else {
+				console.log("Here is an odd number: " + i);
+			}
+		}
 
 	</script>
 
