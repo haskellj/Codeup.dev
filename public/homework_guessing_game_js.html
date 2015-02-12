@@ -7,27 +7,27 @@
 	<script type="text/javascript">
 
 		var play = true;
+// global while loop that determines what happens while user plays
+		while (play){			
 
-		while (play){
-
-			var random = Math.floor((Math.random()*100)+1)
+			var random = Math.floor((Math.random()*100)+1)		
 			var guess = prompt("Choose a number between 1 & 100");
+		
+		// simplifies user input to a number, if possible
+			// guess = parseInt(guess);			
 
+		// what the game should do if the user does not guess the number on their first try
 			while (guess != random){
-				if (guess == null){
+				if (guess == null){   //in case the user 'cancels' out of the game at any time
 					break;
-				} else if (guess == ""){
-					alert("You didn't enter anything, please enter a number between 1 & 100");
-					guess = prompt("Choose a number between 1 & 100");
+				} else if (guess == ""){	
+					guess = prompt("You didn't enter anything, please enter a number between 1 & 100");
 				} else if (isNaN(guess) || guess < 1 || guess > 100){
-					alert("You must enter a number between 1 & 100");
-					guess = prompt("Choose a number between 1 & 100");
+					guess = prompt("You must enter a number between 1 & 100");
 				} else if (guess < random){
-					alert("Nope, guess higher!");
-					guess = prompt("Choose a number between 1 & 100");
+					guess = prompt("Nope, guess higher!");
 				} else if (guess > random){
-					alert("Nope, guess lower!");
-					guess = prompt("Choose a number between 1 & 100");
+					guess = prompt("Nope, guess lower!");
 				} 
 			}
 
@@ -37,9 +37,9 @@
 				alert("You got it! The number was " + random);
 				var again = confirm("Would you like to play again?");
 					if(again){
-						play = true;
+						play = true;		//to start the global loop again
 					} else {
-						play = false;
+						play = false;		//to stop the global loop
 					}
 			}
 		}
