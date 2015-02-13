@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Iterating Arrays</title>
+</head>
+<body>
+
+	<script type="text/javascript">
+
+		var names = ['Adam', 'Beatrice', 'Carl', 'Denise'];
+		console.log("There are " + names.length + " elements in this array.");
+		
+	// here's a repetitive way to log all the names in the array:
+		console.log("The first name is " + names[0]);
+		console.log("The second name is " + names[1]);
+		console.log("The third name is " + names[2]);
+		console.log("The fourth name is " + names[3]);
+
+	// here's a more concise way
+		for (var i=0; i<names.length; i++){
+			console.log("The #" + i + " element of the array is " + names[i]);
+		}
+
+	// here's doing the same thing, but with a forEach loop function
+		names.forEach(function (element, index){
+			console.log("At index #" + index + " is the name " + element);
+		});
+
+	</script>
+
+</body>
+</html>

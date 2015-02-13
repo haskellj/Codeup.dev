@@ -20,17 +20,22 @@
 		var sum = 0;
 
 		while (k<1000) {
-			if(k%3==0){
+			if(k%3==0 || k%5==0){
 				sum += k;
-
-			} else if(k%5==0){
-				sum += k;
-			} else {
-				// do nothing
-			}			
+			} 			
 			k++;
 		}
 		console.log(sum);
+
+// should also log the sum of all multiples of 3 and 5 that are less than 1000 (different approach)
+		var sum = 0;
+		for (var i=1; i<1000; i++){
+			if(i%3==0 || i%5==0){
+				sum += i;
+			} 
+		}
+		console.log(sum);
+
 
 	</script>
 

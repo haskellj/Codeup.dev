@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Functions</title>
+</head>
+<body>
+
+	<SCRIPT TYPE="text/javascript">
+
+		
+
+		(function (){
+			var myNameIs = 'Jamie';	
+			console.log("Hello from " + myNameIs);
+			
+			var random = Math.floor((Math.random()*100)+1);
+			if(random % 2 !==0){
+			console.log(random + " is odd");
+			} else {
+				console.log(random + " is even");
+			}
+		})();
+
+// These should print "undefined" because the variables are strictly local within the function and inaccessible in the global scope.//
+		alert(random);
+		alert(myNameIs);
+
+	</SCRIPT>
+
+
+</body>
+</html>
