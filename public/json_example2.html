@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<script type="text/javascript">
+		var books = [
+        {
+            "Title": "Bourne Identity",
+            "BookNum": 12341324,
+            "Pages": 500,
+            "Author":
+                {
+                    "firstName": "Isaac",
+                    "lastName": "Castillo",
+                    "living": true
+                }
+
+        },
+        {
+            "Title": "Bourne Identity2",
+            "BookNum": 123413242,
+            "Pages": 502,
+            "Author":
+                {
+                    "firstName": "Isaac2",
+                    "lastName": "Castillo2",
+                    "living": false
+                }
+
+        },
+        {
+            "Title": "Bourne Identity3",
+            "BookNum": 123413243,
+            "Pages": 503,
+            "Author":
+                {
+                    "firstName": "Isaac3",
+                    "lastName": "Castillo3",
+                    "living": true
+                }
+
+        },
+    ];
+
+    // log out the books array
+    console.log(books);
+
+    // todo:
+    // Loop through the array of books using .forEach and print out the specified information about each one.
+    for(var i = 0; i < books.length; i++)
+    {
+        // console.log(books[i]);
+        console.log("Book #: " + books[i].BookNum);
+        console.log("Book Author: " + books[i].Author.firstName + ' ' + books[i].Author.lastName);
+        console.log('==================');
+
+    }
+
+    books.forEach(function(book, index){
+        console.log(book.BookNum);
+    });
+
+	</script>
+
+</body>
+</html>

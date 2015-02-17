@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+
+    <script type="text/javascript">
+        var classroom = [
+        {
+            "fname": "Jamie",
+            "lname": "Hsomething",
+            "age": 21,
+            "pets": [
+                {
+                    "type": "cat",
+                    "name": "Dexter",
+                    "gender": "male"
+                },
+                {
+                    "type": "dog",
+                    "name": "Buster",
+                    "gender": "male"
+                }
+            ]
+        },
+        {
+            "fname": "Ryan",
+            "lname": "Dsomething",
+            "age": 22,
+            "pets": [
+                {
+                    "type": "cat",
+                    "name": "Lilly",
+                    "gender": "female"
+                },
+                {
+                    "type": "dog",
+                    "name": "Mugsy",
+                    "gender": "male"
+                },
+                {
+                    "type": "dog",
+                    "name": "Peaches",
+                    "gender": "female"
+                }
+            ]
+        },
+        {
+            "fname": "Max",
+            "lname": "Msomething",
+            "age": 23
+        }
+    ];
+
+    classroom.forEach(function(classmate, index){
+        console.log(classmate.fname + ' ' + classmate.lname + ' is ' + classmate.age + '.');
+
+        if(classmate.pets) {
+
+            console.log(classmate.fname + ' owns the following pets:');
+
+            classmate.pets.forEach(function(pet, index2) {
+                console.log('-- ' + pet.name + ' is a ' + pet.gender + ' ' + pet.type);
+            });
+        } else {
+            console.log('He has no pets :(');
+        }
+
+        console.log('===============================');
+    });
+
+    </script>
+
+</body>
+</html>

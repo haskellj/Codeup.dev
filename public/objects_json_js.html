@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Objects in JSON</title>
+</head>
+<body>
+	<script type="text/javascript">
+
+		// Create an array of objects that represent books.
+		// Each book should have a title and an author.
+		// The book author should be an object with a firstName and lastName.
+		// Be creative and add at least 5 books to the array
+		var books = { 
+			"eachBook":[
+				//Each element is an object containing the title and author for each book.
+						{
+							"title": "The Hobbit", 
+							"author":  	//The "author" is another object containing the 1st & last names.
+								{
+									"firstName": "J.R.R.", 
+									"lastName": "Tolkien"
+								}
+						},
+						{
+							"title": "My Name is Asher Lev", 
+							"author": 
+								{
+									"firstName": "Chaim", 
+									"lastName": "Potok"
+								}
+						},
+						{
+							"title": "Ender's Game", 
+							"author": 
+								{
+									"firstName": "Orson", 
+									"lastName": "Scott Card"
+								}
+						},
+						{
+							"title": "the Hunger Games", 
+							"author": 
+								{
+									"firstName": "Suzanne", 
+									"lastName": "Collins"
+								}
+						},
+						{
+							"title": "Jane Eyre", 
+							"author": 
+								{
+									"firstName": "Charlotte", 
+									"lastName": "Bronte"
+								}
+						},
+						{
+							"title": "The Bible", 
+							"author": 
+								{
+									"firstName": "The One True",
+									"lastName": "God"
+								}
+						}
+			]
+	};
+	//Note: JSON does not like the final semicolon, but JavaScript does.
+
+		// log out the books array
+		console.log(books);
+
+	
+		// Loop through the array of books using .forEach and print out the specified information about each one
+		// start loop here
+		books.eachBook.forEach(function (element, index)
+			{
+		    console.log("Book #" + (index+1));
+		    console.log("Title: " + element.title);
+		    console.log("Author: " + element.author.firstName + " " + element.author.lastName);
+		    console.log("---------------");
+		    });
+		// end loop here
+
+//Global object = "books", property of books == "eachBook", properties within eachBook = "title", "author", properties within author = "firstName", "lastName". 
+//The pathway for calling on properties within an object must start with the largest object and work inward, property by property, separated with a period each time.
+
+
+	</script>
+</body>
+</html>

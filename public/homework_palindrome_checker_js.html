@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Palindrome Checker</title>
+</head>
+<body>
+	<script type="text/javascript">
+
+		var retry = true;
+		while (retry){
+
+			var string = prompt("Enter a word or phrase.").toLowerCase();
+			if (string == null){   //in case the user 'cancels' out of the prompt at any time
+					break;
+			}
+
+		//Turn user input into an array of individual characters.
+			var stringArray = string.split('');
+		//Delete any spaces. Split does strange things with spaces, so best to remove them.
+			while(stringArray.indexOf(' ') >= 0) {
+				var spaces = stringArray.indexOf(' ');
+				var removeSpaces = stringArray.splice(spaces, 1);
+			}
+		//Turn back into a string for later comparison.
+			var stringArrayJoined = stringArray.join('');
+			
+		//Reverse user array, then join back into a string for comparison.
+			var arrayReverse = stringArray.reverse();
+			var reverseArrayJoined = arrayReverse.join('');
+			
+				// console.log(string);
+				// console.log(stringArray);
+				// console.log(stringArrayJoined);
+				// console.log(arrayReverse);
+				// console.log(reverseArrayJoined);
+
+
+			if (reverseArrayJoined === stringArrayJoined){
+				alert("That's a palindrome!");
+			} else {
+				alert("That's not a palindrome....sorry!");
+			}
+
+			var again = confirm("Would you like to check another word or phrase?")
+				if(again){
+					retry = true;
+				} else {
+					retry = false;
+				}
+		}
+
+
+
+	</script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<script type="text/javascript">
+	
+//Example 1:
+		// create a circle object
+		var circle = {
+		    radius: 3,   //radius is an OBJECT within an OBJECT!!!!
+		    getArea: function () {
+		        var circle_area = Math.PI * Math.pow(this.radius, 2);
+		        return circle_area;
+		    },
+		    logInfo: function (round) {
+		        // todo: complete this method. if round is true, round the result to the nearest integer.
+		        if(round){
+		        	var circle_area = Math.round(this.getArea());
+		    	} else {
+		    		var circle_area = this.getArea();
+		    	}
+		    	console.log('Area of a circle with radius: ' + this.radius + ', is: ' + circle_area);
+		    }
+		};
+
+		// log info about the circle
+		console.log(circle.logInfo(false));
+		console.log(circle.logInfo(true));
+
+		// todo:
+		// Change the radius of the circle to 5.
+		circle.radius = 5;
+
+		// log info about the circle
+		console.log(circle.logInfo(false));
+		console.log(circle.logInfo(true));
+
+//Example 2:
+
+		//create a trapezoid object
+		var trapezoid = {
+			//two bases
+			a: 2,
+			b: 5,
+			//height
+			h: 3,		//each of these variables are OBJECTS within and OBJECT!!!!
+			area: function(){
+				var a = trapezoid.a;
+				var b = trapezoid.b;
+				var h = trapezoid.h;
+				var trapArea = ((a + b) * h) / 2;
+				return trapArea;
+			},
+			roundUp: function(round){
+				var trapArea = trapezoid.area();
+				if(round){
+					var trapArea = Math.ceil(trapezoid.area());
+				} 
+				console.log("The area of the trapezoid is " + trapArea);
+			}
+		};
+
+		console.log(trapezoid.area());		//Double parenthesis are IMPORTANT when calling a function!!! 
+		console.log(trapezoid.roundUp(false));
+
+
+		//change variable values.
+		trapezoid.a = 6;
+		trapezoid.b = 3;
+		trapezoid.h = 11;
+
+		console.log(trapezoid.area());		//Double parenthesis are IMPORTANT when calling a function!!! 
+		console.log(trapezoid.roundUp(true));
+
+
+	</script>
+</body>
+</html>

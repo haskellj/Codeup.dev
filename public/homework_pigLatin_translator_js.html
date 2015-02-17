@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Pig Latin Translator</title>
+</head>
+<body>
+	<script type="text/javascript">
+			var pigTranslationArray = [];
+			do {
+				var english = prompt("Enter an english word or phrase to translate into Pig Latin").toLowerCase();
+				} while (!isNaN(english));
+
+		//Turn input into an array of each word.
+			var arrayOfWords = english.split(' ');
+
+		//Check the first letter of each word for consonants or vowels.
+			for (var i = 0; i < arrayOfWords.length; i++){
+				var eachWordArray = arrayOfWords[i].split('');
+		//Check for leading vowel:
+					if (eachWordArray[0] === 'a' || eachWordArray[0] === 'e' || eachWordArray[0] === 'i' || eachWordArray[0] === 'o' || eachWordArray[0] === 'u') {
+						eachWordArray.push('way');
+						var eachWordPig = eachWordArray.join('');
+						pigTranslationArray.push(eachWordPig);
+		//Check for leading consonants:
+					} else {
+						var k = 1
+							while (eachWordArray[k] !== 'a' && eachWordArray[k] !== 'e' && eachWordArray[k] !== 'i' && eachWordArray[k] !== 'o' && eachWordArray[k] !== 'u') {
+								k++
+							}
+						var allLeadingConsonantsArray = eachWordArray.splice(0,k);
+						var allLeadingConsonants = allLeadingConsonantsArray.join('');
+						eachWordArray.push(allLeadingConsonants + 'ay');
+						var eachWordPig = eachWordArray.join('');
+						pigTranslationArray.push(eachWordPig);
+					}
+			}
+			var pigTranslationString = pigTranslationArray.join(' ');
+			alert("English:\n" + english + "\nPig Latin:\n" + pigTranslationString);
+
+	</script>
+</body>
+</html>
