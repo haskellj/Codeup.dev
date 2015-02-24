@@ -1,0 +1,55 @@
+#sidebar {
+	position: fixed;
+	width: 20%;
+	height: 100%;
+	padding-left: 50px;
+	padding-top: 25px;
+	background-color: #381203;
+	color: #fff;
+}
+
+#new-post-form {
+	color: #000;
+}
+
+#submit-button {
+	margin-top: 5px;
+	margin-left: 20%;
+}
+
+
+
+#post {
+	width: 80%;
+	float: right;
+}
+
+.row {
+	margin: 0px 50px 50px;
+}
+
+.titleRow {
+	position: relative;
+	top: 15px;
+	width: 90%;
+	background-color: #381203;
+	color: #fff;
+	box-shadow: 10px 10px 5px #555;
+}
+
+.contentRow {
+	padding-bottom: 15px;
+	padding-right: 15px;
+	border: 3px solid black;
+	background-color: #38C5F4;
+	box-shadow: 10px 10px 5px #888888;
+}
+
+img {
+	border: 2px solid grey;
+	width: 100%;
+}
+
+.postContent {
+	height: 100%;
+}

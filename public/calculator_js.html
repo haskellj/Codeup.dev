@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>JS Calculator</title>
+	<link rel="stylesheet" type="text/css" href="css/calculator.css">
+</head>
+<body>
+	<div id="calculatorContainer">
+	<!-- 3 input fields -->
+		<div>
+			<input id="leftOperand" type="text" name="leftOperand" value="" readonly>
+			<input id="operation" type="text" name="operation" value="" readonly>
+			<input id="rightOperand" type="text" name="rightOperand" value="" readonly><br>
+		</div>
+
+	<!-- Calculator BUTTONS -->
+		<div class="row">
+			<button data-num="-1" id="negation" class="special">±</button>
+			<button id="percentage" class="special">%</button>
+			<button id="sqrRoot" class="special">√</button>
+			<button data-num="+" class="operator">+</button>
+		</div>
+		<div class="row">
+			<button data-num="7" class="numbers">7</button>
+			<button data-num="8" class="numbers">8</button>
+			<button data-num="9" class="numbers">9</button>
+			<button data-num="-" class="operator">-</button>
+		</div>
+		<div class="row">
+			<button data-num="4" class="numbers">4</button>
+			<button data-num="5" class="numbers">5</button>
+			<button data-num="6" class="numbers">6</button>
+			<button data-num="*" class="operator">*</button>
+		</div>
+		<div class="row">
+			<button data-num="1" class="numbers">1</button>
+			<button data-num="2" class="numbers">2</button>
+			<button data-num="3" class="numbers">3</button>
+			<button data-num="/" class="operator">/</button>
+		</div>
+		<div class="row">
+			<button data-num="c" id="clear">C</button>
+			<button data-num="0" class="numbers">0</button>
+			<button data-num="." class="numbers">.</button>
+			<button data-num="=" id="calculate">=</button>
+		</div>
+	</div>
+<!-- Start of JavaScript -->
+	<script type="text/javascript">
+
+		var input1 = "";
+		var input2 = "";
+		var op = "";
+		var result = "";
+
+
+	//------------------------- Button Event Handler FUNCTIONS---------------------------
+		//When the calculator starts or when the clear button is pressed:
+		var clear = function (){
+			window.location.reload();
+		}
+
+		//When numbers are pressed
+		var numberClick = function (event){
+		//"event" is passed into this function as a convention to help remind you //that the button who activated the event is representing the "this.//attributes"
+			var input = this.attributes['data-num'].value;
+			if(op == ""){
+				input1 += input;
+				document.getElementById('leftOperand').value = input1;
+				return input1;
+			} else {
+				input2 += input;
+				document.getElementById('rightOperand').value = input2;
+				return input2;
+			}
+		}
+
+		//When operation symbol is pressed
+		var operationClick = function(event){		
+			op = this.attributes['data-num'].value;
+			document.getElementById('operation').value = op;
+			return op;
+		}
+
+		//When ± is pressed
+		var negate = function(){
+			if(input2 == ""){
+				input1 *= (-1);
+				document.getElementById('leftOperand').value = input1; 
+			} else {
+				input2 *= (-1);
+				document.getElementById('rightOperand').value = input2;
+			}
+		}
+
+		//When % is pressed
+		var toPercentage = function(){
+			input1 *= 100;
+				document.getElementById('leftOperand').value = input1;
+			}
+
+
+		//When √ is pressed
+		var sqrRoot = function(){
+			input1 = Math.sqrt(input1);
+				document.getElementById('leftOperand').value = input1;
+			}
+
+
+		//When equals is pressed
+		var computeClick = function(){
+			input1 = parseFloat(input1);
+			input2 = parseFloat(input2);
+			result = eval(input1 + op + input2);
+			document.getElementById('leftOperand').value = result;
+			document.getElementById('rightOperand').value = "";
+			document.getElementById('operation').value = "";
+			input1 = result;
+			input2 = "";
+			return result;
+		}
+
+		
+
+				
+
+		
+	//---------------------- Button Event Listeners---------------------------------
+		var numbers = document.getElementsByClassName('numbers');
+			for (i = 0; i < numbers.length; i++){
+				numbers[i].addEventListener('click', numberClick, false);
+			}
+		var operators = document.getElementsByClassName('operator');
+			for (k = 0; k < operators.length; k++){
+				operators[k].addEventListener('click', operationClick, false);
+			}
+
+		document.getElementById('negation').addEventListener('click', negate, false);
+		document.getElementById('percentage').addEventListener('click', toPercentage, false);
+		document.getElementById('sqrRoot').addEventListener('click', sqrRoot, false);
+		document.getElementById('calculate').addEventListener('click', computeClick, false);
+		document.getElementById('clear').addEventListener('click', clear, false);
+
+
+
+
+
+
+
+
+			
+
+
+	</script>
+</body>
+</html>

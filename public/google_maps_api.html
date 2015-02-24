@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style type="text/css">
+  #map-canvas {
+    width: 350px;
+    height: 350px;
+  }
+  </style>
+</head>
+<body>
+  <!-- div to hold map -->
+  <div id="map-canvas"></div>
+
+  <!-- Load the Google Maps API [DON'T FORGET TO USE A KEY] -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlTGf6sv-3t8Fvbx3hT-C6qssXr0yg9bE"></script>
+
+  <!-- Script to show address on map -->
+  <script type="text/javascript">
+	   	
+	   	var address = '112 E Pecan St, San Antonio, TX, 78205';
+
+		// Init geocoder object
+		var geocoder = new google.maps.Geocoder();
+
+		// Geocode our address
+		geocoder.geocode( { 'address': address}, function(results, status) {
+		  // Check for a successful result
+		  if (status == google.maps.GeocoderStatus.OK) {
+			    // Set our map options
+			    var mapOptions = {
+			      // Set the zoom level
+			      zoom: 17,
+			      // This sets the center of the map at our location
+			      center: results[0].geometry.location,
+			      mapTypeId: google.maps.MapTypeId.ROADMAP
+			    }
+			    // Render the map
+			    var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+			    // Create lat and long for our marker position
+			    var codeup = { lat: 29.428459, lng: -98.492433 };
+
+			    // Add the marker to our existing map
+			    var image = 'img/pushpin.jpg';
+			    var marker = new google.maps.Marker({
+				    position: codeup,
+				    map: map,
+				    icon: image,
+				    draggable:true,
+    				animation: google.maps.Animation.DROP
+			    });
+			    // Create a new infoWindow object with content
+				var infowindow = new google.maps.InfoWindow({
+				    content: 'Codeup Academy is on the 10th Floor.'
+				});
+
+				// Open the window using our map and marker
+				infowindow.open(map,marker);
+		  } else {
+		    // Show an error message with the status if our request fails
+		    alert("Geocoding was not successful - STATUS: " + status);
+		  }
+		});
+
+
+
+  </script>
+</body>
+</html>

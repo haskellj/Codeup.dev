@@ -1,0 +1,97 @@
+html {
+	background-image: url(../img/schooldesk.jpg);
+	background-size: 100%;
+}
+#calculatorContainer {
+	margin: auto;
+	margin-top: 50px;
+	border: 2px solid grey;
+	border-bottom: 5px solid #666;
+	border-right: 5px solid #444;
+	border-radius: 5px;
+	width: 200px;
+	height: 315px;
+	padding: 5px;
+	background-color: #7A98A0;
+	box-shadow: 2px 2px 5px rgba(0,0,0,0.7),
+				8px 8px 10px rgba(0,0,0,0.6),
+            	12px 12px 20px rgba(0,0,0,0.3),
+            	-1px -1px 30px rgba(0,0,0,0.2);
+}
+
+input {
+	width: 74px;
+	height: 45px;
+	margin-bottom: 8px;
+	text-align: center;
+	font-size: 35px;
+	font-family: "digital-7";
+	background-color: #c0c0c0;
+	color: #36401B;
+	border-top: 4px inset #97b3bb;
+	border-left: 4px inset #97b3bb;
+	box-shadow: inset 4px 4px 5px #666;
+}
+
+#operation {
+	width: 20px;
+}
+
+.row {
+	width: 203px;
+	height: 49.2px;
+	border: 1px;
+	margin-bottom: 2px;
+}
+
+button {
+	width: 23%;
+	height: 95%;
+	font-size: 22px;
+	color: #fff;
+	border-radius: 10px;
+	box-shadow: 2px 2px 1px rgba(0,0,0,0.5);
+	cursor: pointer;
+	position: relative;
+
+}
+
+.special, .operator {
+	background-color: #CA6716;
+}
+
+.numbers {
+	background-color: #4c4c4c;
+}
+
+#clear, #calculate {
+	color: #000;
+	border-top: 2px solid #808080;
+	border-left: 2px solid #808080
+}
+
+.special:hover, .operator:hover {
+	background-color: #993D1F;
+}
+
+.numbers:hover {
+	background-color: #000;
+}
+
+#clear:hover, #calculate:hover {
+	background-color: #9E9E9E;
+}
+
+.special:active, .operator:active, .numbers:active, #clear:active, #calculate:active {
+	box-shadow: 0px 0px 1px rgba(0,0,0,0.5);
+	top: 4px;
+}
+
+.special:focus, .operator:focus, .numbers:focus, #clear:focus, #calculate:focus {
+	outline: none;
+}
+
+/*#calculate {
+	float: right;
+	margin-right: 4px;
+}*/

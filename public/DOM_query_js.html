@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DOM: Query and Modify</title>
+</head>
+<body>
+
+    <h1 id="main-header">Hello World!</h1>
+    <ul>
+        <li data-dbid="1" >Item 1</li>
+        <li data-dbid="2" >Item 2</li>
+        <li data-dbid="3" >Item 3</li>
+        <li data-dbid="4" >Item 4</li>
+        <li data-dbid="5" >Item 5</li>
+    </ul>
+    <h2 id="sub-header">Hello Again.</h2>
+    <p class="sub-paragraph">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+        eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+        ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+        aliquip ex ea commodo consequat. Duis aute irure dolor in
+        reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+        pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+        culpa qui officia deserunt mollit anim id est laborum.
+    </p>
+
+    <p><button id="btn1">Click Me!</button></p>
+    <p><button id="btn2">No, Click Me!</button></p>
+    <p><button id="btn3">No, Me!</button></p>
+    <p><button id="btn4">No, Me First!</button></p>
+
+    <script>
+
+        // todo: get the main header element by id
+        var mainHeader = document.getElementById('main-header');
+
+        // todo: set inner html of mainHeader to "JavaScript is Cool"
+        mainHeader.innerHTML = "JavaScript is Cool";
+
+        // todo: get the sub header element by id
+        var subHeader = document.getElementById('sub-header');
+
+        // todo: set the text color of subHeader to blue
+        subHeader.style.color = 'blue';
+
+        // todo: get all list items
+        var listItems = document.getElementsByTagName('li');    //TagName & ClassName create an array
+
+        // todo: set text color on every other list item to grey
+        //Note: ByTagName and ByClassName are like ARRAYS!!!
+        //They cannot be directly modified. Instead they must be modified using a for loop.
+        for (i = 0; i < listItems.length; i+=2){        
+            listItems[i].style.color = 'grey';       
+        }
+
+
+        // todo: set text color of li with dbid = 1 to red
+        //Note: ByTagName and ByClassName are like ARRAYS!!!
+        //They cannot be directly modified. Instead they must be modified using a for loop.
+        //And since data-dbid is an array-like attribute within an array-like object, it must be modified likewise.
+        // listItems[0].style.color = 'blue';    //if you knew which li you wanted, otherwise:
+        for (var k = 0; k < listItems.length; k++){
+            var dbID = listItems[k].attributes['data-dbid'].value;
+            if (dbID == 1) {
+                listItems[k].style.color = 'red';
+            }
+        }
+
+        // todo: get all elements with class name sub-paragraph
+        var subParagraphs = document.getElementsByClassName('sub-paragraph');
+
+        // todo: change the text in the first sub paragraph to "Mission Accomplished!"
+        //Note: ByTagName and ByClassName are like ARRAYS!!!
+        //They cannot be directly modified. Instead they must be modified using a for loop.
+        for (i = 0; i < subParagraphs.length; i++){
+            subParagraphs[i].innerHTML = "Mission Accomplished!";
+        }
+
+        //Attach click event listeners to each of the buttons and have the handlers perform the modifications that were automatically taking place. For example, the first button should set inner html of mainheader to "JavaScript is Cool".
+        //Note: functions could simply be wrapped around the todo items above. But for clarity, they will be repeated below, with slight alterations, so that the individual operation being performed for each todo item is more easily understood.
+
+//Button eventListener functions (handlers) below:
+        var changeMainHeader = function (){
+            document.getElementById('main-header').innerHTML = "JavaScript is logical, but OCD";
+        }
+        
+        var changeSubHeader = function (){
+            document.getElementById('sub-header').style.color = 'green';
+        }      
+
+        var changeAllListItems = function (){
+            var listItems = document.getElementsByTagName('li');
+            for (i = 0; i < listItems.length; i+=2){        
+                listItems[i].style.color = 'orange';       
+            };
+            for (var k = 0; k < listItems.length; k++){
+                var dbID = listItems[k].attributes['data-dbid'].value;
+                if (dbID == 1) {
+                    listItems[k].style.color = 'grey';
+                }
+            };
+        }
+
+        var changeParagraph = function (){
+            var subParagraphs = document.getElementsByClassName('sub-paragraph');
+            for (i = 0; i < subParagraphs.length; i++){
+                subParagraphs[i].innerHTML = "Task Complete!";
+            };
+        }
+        
+//Button calls (events) below:
+        document.getElementById('btn1').addEventListener('click', changeMainHeader, false);
+        document.getElementById('btn2').addEventListener('click', changeSubHeader, false);
+        document.getElementById('btn3').addEventListener('click', changeAllListItems,  false);
+        document.getElementById('btn4').addEventListener('click', changeParagraph, false);
+   
+    </script>
+
+</body>
+</html>

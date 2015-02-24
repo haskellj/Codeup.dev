@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>DOM Blog</title>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+  	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="css/DOM_blog.css">
+</head>
+<body>
+
+	<div id="sidebar" class="hidden-sm hidden-xs">Create a New Post:
+		<form id="new-post-form">
+			<input id="new-title" type='text' name='title' placeholder="Title"><br>
+			<input id="new-author" type='text' name='author' placeholder="Your Name"><br>
+			<input id="new-body" type='text' name='body' placeholder="Body">
+			<p><button id="submit-button" type="submit" class="btn btn-primary">Submit</button></p>
+		</form>
+	</div>
+
+<!-- Blog posts will be generated within the following div by my JavaScript -->
+	<div id="post">Javascript will replace this.</div>
+
+	
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/DOM_blog.js"></script>
+
+</body>
+</html>
