@@ -2,14 +2,43 @@
 <html>
 <head>
 	<title>JQuery Exercises</title>
+	<style>
+		#niceHeader {
+			text-align: center;
+			color: #900;
+		}
+
+		.list {
+			text-align: center;
+		}
+	</style>
 	<script src="js/jquery.js"></script>
+
+<!-- This JQuery seems to be happening last.....strange. -->
 	<script>
 		$(document).ready(function(){
-			alert("the page has loaded!");
-		});
-	</script>
+			alert("the page is ready!");
+			var contents = $('#codeup').html();
+	            alert(contents);
+        });
+    </script>
 </head>
 <body>
+    <h1 id="codeup">Hello Codeup</h1>
+    <h1 id="niceHeader">This is a nice header, right?</h1>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+	</p>
+	<ul>
+		<li class="list">Item 1</li>
+		<li class="list">Item 2</li>
+		<li class="list">Item 3</li>
+	</ul>
+	<div>This is a DIV</div>
 
 
 
@@ -18,7 +47,37 @@
 JScript at the end of the BODY. That way the page will 
 have already loaded by the time it reads the JScript. -->
 	<script>
-		alert("the page has loaded!");
+		alert("this is the script at the end!");
+		
+		var $niceHeader = $('#niceHeader');
+		alert($niceHeader.html());
+		$niceHeader.hover(
+			function(){
+				$(this).css('background-color', 'blue');
+			}, function(){
+				$(this).css('background-color', '');
+			}
+		);
+	
+		var $list = $('.list');
+		console.log($list.html());
+
+		$('#codeup, p').css('color', '#00d')
+				.css('background-color', '#999');
+
+		$('.list').css('border', '1px solid #900')
+					.css('background-color', '#ff0')
+					.css('border', '1px solid #900')
+					.css('width', '100px')
+					.css('font-size', '20px')
+					.click(function(){
+						confirm("Did you just click an item?")
+					});
+		$('p').dblclick(function(){
+			$(this).css("font-size", "24px");
+		});
+
+		$('*').css('border', '1px dashed #000');
 	</script>
 </body>
 </html>
