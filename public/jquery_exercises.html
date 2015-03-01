@@ -2,6 +2,7 @@
 <html>
 <head>
 	<title>JQuery Exercises</title>
+	<script src="js/jquery.js"></script>
 	<style>
 		#niceHeader {
 			text-align: center;
@@ -12,7 +13,6 @@
 			text-align: center;
 		}
 	</style>
-	<script src="js/jquery.js"></script>
 
 <!-- This JQuery seems to be happening last.....strange. -->
 	<script>
@@ -39,6 +39,7 @@
 		<li class="list">Item 3</li>
 	</ul>
 	<div>This is a DIV</div>
+	<input id='pressEvent' placeholder="this has a keypress event"></input>
 
 
 
@@ -72,12 +73,21 @@ have already loaded by the time it reads the JScript. -->
 					.css('font-size', '20px')
 					.click(function(){
 						confirm("Did you just click an item?")
+					})
+					.hover(function(){
+						$(this).css('color', 'green')
+					}, function(){
+						$(this).css('color', '')
 					});
 		$('p').dblclick(function(){
 			$(this).css("font-size", "24px");
 		});
 
 		$('*').css('border', '1px dashed #000');
+
+		$('#pressEvent').keypress(function(){
+			console.log(event.charCode);
+		});
 	</script>
 </body>
 </html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Keyboard Mapping</title>
+	<script type="text/javascript" src="js/jquery.js"></script>
+</head>
+<body>
+	<h1 id="myName">How do you spell your first & last names?</h1>
+	<h4 id="pressEnter">(Press enter when you are done.)</h4>
+	<hr>
+	<h3>Your Current Lives: <span>5</span></h3>
+	<h4 id="enterSecret">(Enter secret sequence to access extra lives.)</h4>
+
+
+	<script>
+		var sequence = []; 	
+		//"for" looping through an array to check that it matches a master array is not a good approach. It will return "true" if any element matches at any time, not when "all" of the elements match, like you want it to. Instead, you can use a "counter": 
+		// var count = 0;
+		
+		//This array spells 'j'a'm'i'e'h'a's'k'e'l'l'enter'
+		var correctName = [74, 65, 77, 73, 69, 72, 65, 83, 75, 69, 76, 76, 13];
+		
+		//This array spells 'up'down'up'down'left'right'left'right'b'a'b'a'enter'
+		var bonusLives = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65, 66, 65, 13];
+		
+		console.log(correctName); 
+		console.log(bonusLives);
+
+		$(document).keydown(function(){
+
+		//grab each key that is pressed
+			var key = event.keyCode;
+			sequence.push(key);
+			console.log(sequence);
+			// if(key == correctName.length - 1){
+			// 	$('#myName').html('Jamie Haskell');
+			// 	confirm("Is this correct?");
+			// 	count = 0;
+			// } else if(key != correctName[count]) {
+			// 	alert("Can't fool me! \nI know that is not correct. \nTry again.");
+			// 	count = 0;
+			// } else {
+			// 	console.log('match')
+			// 	count++;
+			// 	console.log("count is now: " + count);
+			// }
+
+			// var bonusAttempt = event.keyCode;
+			// if(bonusAttempt == bonusLives.length - 1){
+			// 	$('span').html('35');
+			// 	alert("You now have an additional 30 lives!");
+			// 	count = 0;
+			// } else if(bonusAttempt != bonusLives[count]) {
+			// 	alert("Can't fool me! \nI know that is not correct. \nTry again.")
+			// 	count = 0;
+			// } else {
+			// 	console.log('match')
+			// 	count++;
+			// 	console.log("count is now: " + count);
+			// }
+
+			//These functions removes elements from the first array that match any in the second array.
+			function compareNameArrays(){
+				return $(correctName).not(sequence).length
+			};
+
+			function compareBonusArrays(){
+				return $(bonusLives).not(sequence).length
+			};
+
+			//when they match your name attach that name to the h1 tag above
+			for(var i = 0; i < sequence.length; i++){
+				if(compareNameArrays() === 0){
+					$('#myName').html('Jamie Haskell')
+								.css('color', 'blue')
+								.css('font-size', 40);
+					$('#pressEnter').html('');
+					confirm("Is this correct?");
+					sequence = [];
+					console.log(sequence);
+					break;
+				}
+				if(sequence[i]!=correctName[i] && sequence[i]!=bonusLives[i]){
+					console.log(sequence[i], correctName[i], bonusLives[i]);
+					alert("Can't fool me! \nThat is not correct. \nTry again.");
+					sequence = [];
+					console.log(sequence);
+					break;
+				}
+
+				//create this sequence and alert('You have an additional 30 lives!')
+				//up, up, down, down, left, right, left, right, b, a, b, a, enter
+				if(compareBonusArrays() === 0){
+					$('span').html('35')
+							.css('color', 'red')
+							.css('font-size', '32');
+					$('#enterSecret').html('');
+					alert("You now have an additional 30 lives!");
+					sequence = [];
+					console.log(sequence);
+					break;
+				}
+			}
+		});
+
+	</script>
+
+
+
+
+</body>
+</html>
