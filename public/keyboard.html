@@ -28,10 +28,11 @@
 
 		$(document).keydown(function(){
 
-		//grab each key that is pressed
+			//grab each key that is pressed
 			var key = event.keyCode;
 			sequence.push(key);
 			console.log(sequence);
+			
 			// if(key == correctName.length - 1){
 			// 	$('#myName').html('Jamie Haskell');
 			// 	confirm("Is this correct?");
@@ -81,7 +82,6 @@
 					break;
 				}
 				if(sequence[i]!=correctName[i] && sequence[i]!=bonusLives[i]){
-					console.log(sequence[i], correctName[i], bonusLives[i]);
 					alert("Can't fool me! \nThat is not correct. \nTry again.");
 					sequence = [];
 					console.log(sequence);
