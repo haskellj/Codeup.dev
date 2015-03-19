@@ -64,5 +64,10 @@
 	</div>
 	<h1>These are a few of my favorite things.....</h1>
 	<button class="myButton">Click to see another</button>
+
+	<form method="GET" action="https://duckduckgo.com/">
+    <input type="text" name="q" value="" placeholder="Search DuckDuckGo">
+    <button type="submit">Go!</button>
+</form>
 </body>
 </html>
