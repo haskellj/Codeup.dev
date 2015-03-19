@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Weather App</title>
+    <link rel="stylesheet" type="text/css" href="css/weather_api.css">
+</head>
+<body>
+
+    <h1>Weather Forecast</h1>
+
+    <!-- div to hold the forecast -->
+    <div id="container">
+    	<div id="row">
+    		<h2 id="city">City</h2>
+    		<div id="weather"></div>
+    	</div>
+    </div>
+    
+    <!-- divs to hold map and input field-->
+  	<div id="updateLocation">
+  		<input id="address" type="text" placeholder="Drag pin or type desired location"></input>
+  		<button id="update">Update Location</button>
+  	</div>
+  	<div id="map-canvas"></div>
+
+	<!-- Load the Google Maps API [DON'T FORGET TO USE A KEY] -->
+	  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlTGf6sv-3t8Fvbx3hT-C6qssXr0yg9bE"></script>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+	<script>
+		(function() {
+
+			function convertToFerenheit(kelvins){
+				return Math.round(((9/5) * (kelvins - 273) + 32));
+			};
+
+
+		    //Default 5 day forecast from openweathermap.org API
+		    var weather = $.ajax('http://api.openweathermap.org/data/2.5/forecast/daily?lat=29.423017&lon=-98.48527&cnt=5&mode=json');
+
+		    // var weather = $.ajax('http://api.openweathermap.org/data/2.5/forecast/daily?lat=' + y + '&lon=' + x + '&cnt=5&mode=json');
+		    
+			function getWeatherInformation(data) {
+		    	console.log(data);
+		    	var cityName = '<h2>' + data.city.name + '</h2>';
+		    	var weatherHtml = '';
+				
+				//loop through the API data and concatinate an html string to input into empty div
+		    	$(data.list).each(function(index, element){
+			    	weatherHtml += '<div class="eachDay">';
+			    	weatherHtml += '<h3>' + new Date(element.dt * 1000).toDateString() + '</h3>';
+			    	weatherHtml += '<h4>High: ' + convertToFerenheit(element.temp.max) + '°F</h4>';
+			    	weatherHtml += '<h4>Low: ' + convertToFerenheit(element.temp.min) + '°F</h4>';
+			    	weatherHtml += '<img src="http://openweathermap.org/img/w/' + element.weather[0].icon + '.png">';
+			    	weatherHtml += '<p>Description: ' + element.weather[0].description + '</p>';
+			    	weatherHtml += '<p>Cloud Coverage: ' + element.clouds + '%</p>';
+			    	weatherHtml += '<p>Humidity: ' + element.humidity + '%</p>';
+			    	weatherHtml += '</div>';
+			    });
+		   		
+		   		$('#city').html(cityName);
+		    	$('#weather').html(weatherHtml);
+		    };
+
+// ------------------------------Google Maps Using a specific Address------------------------------
+			   	//Default address on initial load
+			   	var address = 'San Antonio, TX';
+			   	var x;
+			   	var y;
+				// Init geocoder object
+				var geocoder = new google.maps.Geocoder();
+
+				function mapIt(){
+					// Geocode our address
+					geocoder.geocode( { 'address': address}, function(results, status) {
+					  // Check for a successful result
+					  if (status == google.maps.GeocoderStatus.OK) {
+						    // Set our map options
+						    var mapOptions = {
+						      // Set the zoom level
+						      zoom: 6,
+						      // This sets the center of the map at our location
+						      center: results[0].geometry.location,
+						      mapTypeId: google.maps.MapTypeId.ROADMAP
+						    }
+						    //Get forecast from weather API
+						    x = mapOptions.center.D;	//longitude
+						    y = mapOptions.center.k;	//latitude
+						    weather = $.ajax('http://api.openweathermap.org/data/2.5/forecast/daily?lat=' + y + '&lon=' + x + '&cnt=5&mode=json');
+
+						    // Render the map
+						    var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+
+						    // Add the marker to our existing map
+						    var image = 'img/pushpin.jpg';
+						    var marker = new google.maps.Marker({
+							    position: mapOptions.center,
+							    map: map,
+							    icon: image,
+							    draggable: true,
+			    				animation: google.maps.Animation.DROP
+						    });
+						    //Get longitude and latitude of marker when it's dragged
+							google.maps.event.addListener(marker, 'dragend', function(event){
+							  	console.log(this.getPosition());
+							  	weather = $.ajax('http://api.openweathermap.org/data/2.5/forecast/daily?lat=' + this.getPosition().lat() + '&lon=' + this.getPosition().lng() + '&cnt=5&mode=json');
+							  	map.panTo(marker.getPosition());
+							  	console.log(this.getPosition().lat());
+							  	console.log(this.getPosition().lng());
+							  	weather.done(getWeatherInformation);
+							});
+							//Re-center the map around the marker when window is resized
+							google.maps.event.addDomListener(window, 'resize', function() {
+							  map.setCenter(marker.getPosition());
+							});
+					  } else {
+						    // Show an error message with the status if our request fails
+						    console.log("Geocoding was not successful - STATUS: " + status);
+					  }
+					weather.done(getWeatherInformation);   
+					});
+				};
+			
+			weather.done(getWeatherInformation);
+			mapIt();
+			$('#update').click(function(){
+				address = document.getElementById('address').value;
+				console.log(address);
+				mapIt();
+			});
+		})();
+	</script>
+
+</body>
+</html>

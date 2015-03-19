@@ -1,0 +1,74 @@
+html, body {
+	background-color: #abdcfd;
+	padding: 0;
+	margin: 0;
+}
+
+h1 {
+	text-align: center;
+}
+
+#container {
+	text-align: none;
+	width: 100%;
+	height: 100%;
+	background-image: url('../img/sunset_sky.jpeg');
+	background-repeat: no-repeat;
+	background-size: cover;			/* Stretches the img */
+	background-color: #abdcfd;		/* In case img doesn't load */
+	overflow: hidden;				/* Forces the div to contain floated divs */
+	padding-bottom: 5px;
+	padding-left: 5px;
+}
+
+#row {
+	margin-left: auto;
+	margin-right: auto;
+	max-width: 1098px;
+	overflow: hidden;
+}
+
+#city {
+	margin-bottom: -25px;
+	margin-top: -10px;
+	color: #f2f2f2;
+}
+
+.eachDay {
+	border: 1px solid black;
+	border-radius: 25px;
+	text-align: center;
+	float: left;
+	padding: 0px 10px;
+	width: 193px;
+	margin-right: 5px;
+	margin-bottom: 5px;
+	background-color: #f2f2f2;
+	opacity: 0.7;
+}
+
+#updateLocation {
+	text-align: center;
+	z-index: 1;
+	position: relative;
+	bottom: -50px;
+}
+
+#address {
+	width: 228px;
+	height: 25px;
+	text-align: center;
+	font-size: 14px;
+}
+
+#update {
+	background-color: #fe753c;
+	border-radius: 10px;
+}
+
+#map-canvas, #map-canvas2 {
+    width: 75%;
+    height: 300px;
+    margin-right: auto;
+    margin-left: auto;
+  }

@@ -1,0 +1,71 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Online Store</title>
+    <style>
+        table, th, td {
+            text-align: center;
+            border: 1px solid grey;
+
+        }
+    </style>
+</head>
+<body>
+
+    <h1>My Tool Store</h1>
+
+    <table id="products">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Categories</th>
+            </tr>
+        </thead>
+        <tbody id="insertProducts"></tbody>
+    </table>
+    <button>Refresh</button>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+    <script>
+
+
+        //Self-invoking function to keep everything local
+        (function() {
+            //local function that can be called without reloading the page
+            function loadJSON(){
+                // TODO: Create an ajax GET request for /data/inventory.json
+                $.get("data/inventory.json").done(function(data){
+                    // console.log(data);
+
+                    var htmlString = '';
+
+                    $(data).each(function(index, element){
+                        // console.log(element.title);
+                        htmlString += '<tr>';
+                        htmlString += '<td>' + element.title + '</td>';
+                        htmlString += '<td>' + element.quantity + '</td>';
+                        htmlString += '<td>' + '$' + element.price.toFixed(2) + '</td>';
+
+                        var categories = element.categories.join(', ');
+                        // console.log(categories);
+
+                        htmlString += '<td>' + categories + '<td>';
+                        htmlString += '</tr>';
+                        console.log(htmlString);
+                    });
+                    // TODO: Take the data from inventory.json and append it to the products table
+                    $('#insertProducts').html(htmlString);
+                });
+            };
+            loadJSON(); //loads the data on page load
+            $('button').click(loadJSON);    //loads the data without refreshing page
+        })();
+
+    </script>
+
+</body>
+</html>

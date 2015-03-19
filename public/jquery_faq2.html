@@ -1,0 +1,89 @@
+<DOCTYPE html>
+<html>
+<head>
+	<title>Toggling Classes</title>
+	<style>
+		
+		.invisible {
+			display: none;
+		}
+
+	</style>
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<script>
+		
+		//Click the link to show all 'dd' sub-definitions
+		//Click each individual 'dt' title to show/hide individual sub-definitions
+		$(document).ready(function(){
+			$('#showList').click(function(event) {
+				event.preventDefault();		//this prevents the link from actually linking
+				$('dd').fadeToggle('slow');
+			});
+			$('ul').each(function(){
+				$(this).css('cursor', 'pointer');
+				$(this).children().first().css('font-weight', 'bold')
+										.css('background', '#FF0');
+				$(this).children().last().css('text-decoration', 'underline');
+			});
+			$('h3').click(function(){
+				$(this).parent().children().children().fadeToggle('fast');
+				});
+		});
+
+	</script>
+</head>
+<body>
+
+	<dl><p>National Park FAQs</p>
+			<dt>They are big</dt>
+				<dd class="invisible">They are protected by the government</dd>
+			<dt>Admission is free for students</dt>
+				<dd class="invisible">Wildlife is present</dd>
+			<dt>Idiots tend to set them on fire</dt>
+				<dd class="invisible">This is another fact</dd>
+			<dt>George Sr. loves Yosimite</dt>
+				<dd class="invisible">The Grand Canyon is one, for some reason</dd>
+			<dt>So is the Everglades</dt>
+				<dd class="invisible">Our cohort is only one not named after one</dd>
+			<dt>They are big</dt>
+				<dd class="invisible">They are protected by the government</dd>
+			<dt>Admission is free for students</dt>
+				<dd class="invisible">Wildlife is present</dd>
+			<dt>Idiots tend to set them on fire</dt>
+				<dd class="invisible">This is another fact</dd>
+			<dt>George Sr. loves Yosimite</dt>
+				<dd class="invisible">The Grand Canyon is one, for some reason</dd>
+			<dt>So is the Everglades</dt>
+				<dd class="invisible">Our cohort is only one not named after one</dd>
+	</dl>
+	<a href="#" id="showList">Click here to diplay all FAQs</a>	
+	<div>
+		<h3>Yosemite</h3>
+		<ul>
+			<li>Contains the famous Half Dome cliff</li>
+			<li>Has some animals</li>
+			<li>Has some trees</li>
+			<li>And some more trees</li>
+		</ul>
+	</div>
+	<div>
+		<h3>Yellowstone</h3>
+		<ul>
+			<li>Contains the Old Faithful geiser</li>
+			<li>Has some animals</li>
+			<li>Has some trees</li>
+			<li>And some buffalo</li>
+		</ul>
+	</div>
+	<div>
+		<h3>Everglades</h3>
+		<ul>
+			<li>Contains alligators</li>
+			<li>Has some birds</li>
+			<li>Has some trees</li>
+			<li>Is mostly swamp-land</li>
+		</ul>
+	</div>
+
+</body>
+</html>

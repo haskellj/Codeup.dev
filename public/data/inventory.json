@@ -1,0 +1,69 @@
+[
+    {
+        "title": "Hammer",
+        "quantity": 25,
+        "categories": [
+            "tool"
+        ],
+        "price": 20
+    }, {
+        "title": "Drill",
+        "quantity": 5,
+        "categories": [
+            "tool",
+            "powered"
+        ],
+        "price": 100
+    }, {
+        "title": "Mower",
+        "quantity": 5,
+        "categories": [
+            "tool",
+            "gas",
+            "outdoor"
+        ],
+        "price": 200
+    }, {
+        "title": "Screwdrivers",
+        "quantity": 25,
+        "categories": [
+            "tool"
+        ],
+        "price": 10
+    }, {
+        "title": "Screws",
+        "quantity": 500,
+        "categories": [
+            "tool",
+            "hardware",
+            "indoor/outoor"
+        ],
+        "price": 0.10
+    }, {
+        "title": "Nails",
+        "quantity": 1000,
+        "categories": [
+            "tool",
+            "hardware",
+            "indoor/outoor"
+        ],
+        "price": 0.05
+    }, {
+        "title": "Chainsaw",
+        "quantity": 8,
+        "categories": [
+            "tool",
+            "gas",
+            "outoor"
+        ],
+        "price": 399
+    }, {
+        "title": "Shovel",
+        "quantity": 7,
+        "categories": [
+            "tool",
+            "outoor"
+        ],
+        "price": 37
+    }
+]
