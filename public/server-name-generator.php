@@ -1,6 +1,6 @@
 <?php
-	$adjectives = ['blue', 'happy', 'indifferent', 'hairy', 'shitty', 'flat', 'curvy', 'bald', 'bubbly', 'square', 'soggy'];
-	$nouns = ['shit', 'puppy', 'rainbow', 'puddle', 'snowman', 'duck', 'bee', 'flower', 'palm', 'chihuahua', 'html'];
+	$adjectives = ['blue', 'happy', 'indifferent', 'hairy', 'shitty', 'flat', 'curvy', 'bald', 'bubbly', 'square', 'soggy', 'moist', 'sadistic', 'bloodthirsty', 'nervous'];
+	$nouns = ['shit', 'puppy', 'rainbow', 'puddle', 'snowman', 'duck', 'bee', 'flower', 'palm', 'chihuahua', 'html', 'cat', 'vampire', 'cheerleader', 'taco'];
 
 	function randomName($adj, $noun)
 	{

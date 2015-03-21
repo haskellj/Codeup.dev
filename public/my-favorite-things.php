@@ -36,6 +36,9 @@
 			text-align: center;
 			background-color: #f0a0a0;
 		}
+		h4 {
+			color: #666;
+		}
 	</style>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
 	<script>!window.jQuery && document.write('<script src="jquery-1.4.1.min.js"><\/script>')</script>
@@ -68,6 +71,16 @@
 	<form method="GET" action="https://duckduckgo.com/">
     <input type="text" name="q" value="" placeholder="Search DuckDuckGo">
     <button type="submit">Go!</button>
-</form>
+	</form>
+
+
+    <form method="GET" action="<?php $_PHP_SELF ?>">
+    <input type="text" name="name" value="" placeholder="GET Request Test">
+    <button type="submit">Go!</button>
+    <?php if(!empty($_GET['name'])){ ?>
+    	<h4><?php echo "Hello " . $_GET['name']; ?></h4>
+    <?php } ?>
+	</form>
+	
 </body>
 </html>
