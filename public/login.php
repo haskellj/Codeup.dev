@@ -11,6 +11,7 @@
 			$message = "Wrong username or password.";
 		} else {
 			header("Location: authorized.php?");		// header() is a redirect function
+			exit();
 		}
 	} else {
 			$message = "Please enter your username & password.";

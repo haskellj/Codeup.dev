@@ -7,6 +7,7 @@
 	if($_POST) {
 		if($username == 'guest' && $password == 'password'){
 			header("Location: authorized.php");
+			exit();
 		} else {
 			$message = "Wrong username or password";
 		}
