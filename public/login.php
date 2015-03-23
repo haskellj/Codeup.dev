@@ -10,7 +10,7 @@
 		if($inputName != $username || $inputPswd != $password){
 			$message = "Wrong username or password.";
 		} else {
-			header("Location: authorized.php?");
+			header("Location: authorized.php?");		// header() is a redirect function
 		}
 	} else {
 			$message = "Please enter your username & password.";

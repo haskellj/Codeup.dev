@@ -8,6 +8,6 @@
 	<title>POST Results</title>
 </head>
 <body>
-	<p>Access Authorized</p>
+	<h2>Access Authorized</h2>
 </body>
 </html>
