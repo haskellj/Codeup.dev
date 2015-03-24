@@ -2,8 +2,10 @@
 	var_dump($_POST);
 	
 	session_start();
+	// re-store the username sent from login page
 	$username = $_SESSION['LOGGED_IN_USER'];
 
+	// Don't allow access to authorization page if user is not logged in
 	if(isset($_SESSION['LOGGED_IN_USER'])){
 		echo $username;
 	} else {

@@ -3,7 +3,7 @@
 	// Start a session for the page
 	session_start();
 
-	// If user is already logged in, redirect to authorization page
+	// If user is already logged in, redirect to authorization page and don't run rest of PHP
 	if(isset($_SESSION['LOGGED_IN_USER'])){
 		header("Location: authorized.php");		// header() is a redirect function
 		exit();
