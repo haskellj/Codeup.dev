@@ -13,8 +13,10 @@
 	}
 	
 	// If user is not logged in, ask for credentials
-	$username = isset($_POST['username']) ? $_POST['username'] : '';
-	$password = isset($_POST['password']) ? $_POST['password'] : '';
+	// $username = isset($_POST['username']) ? $_POST['username'] : '';
+	// $password = isset($_POST['password']) ? $_POST['password'] : '';
+	$username = Input::has('username') ? Input::get('username') : '';
+	$password = Input::has('password') ? Input::get('password') : '';
 	$message = '';
 
 	if($_POST) {
