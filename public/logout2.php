@@ -1,6 +1,8 @@
 <?php
+	// Let these Classes do all the work, rather than the logout 'endSession()' function itself
 	require_once '../Auth.php';
-	
+	require_once '../Input.php';
+
 	// code for this function came directly from PHP docs:
 	// http://php.net/session_destroy
 	function endSession()

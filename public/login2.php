@@ -1,6 +1,7 @@
 <?php
-	// Required class
+	// Required Classes
 	require_once '../Auth.php';
+	require_once '../Input.php';
 
 	// Start a session for the page
 	session_start();

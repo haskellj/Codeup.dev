@@ -1,6 +1,7 @@
 <?php
 	// var_dump($_POST);
 	require_once '../Auth.php';
+	require_ocne '../Input.php';
 
 	session_start();
 	// re-store the username sent from login page
