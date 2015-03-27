@@ -6,11 +6,12 @@
 	session_start();
 	// re-store the username sent from login page
 	// $username = $_SESSION['LOGGED_IN_USER'];
-	$username = Auth::user();
+	// $username = Auth::user();
 
 	// Don't allow access to authorization page if user is not logged in
 	// if(isset($_SESSION['LOGGED_IN_USER'])){
 	if(Auth::check()){
+		$username = Auth::user();
 		echo "Welcome $username!";
 	} else {
 		header("Location: login2.php");
