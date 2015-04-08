@@ -14,7 +14,7 @@
 	    email VARCHAR(240) NOT NULL,
 	    name  VARCHAR(50) NOT NULL,
 	    PRIMARY KEY (id), 
-	    CONSTRAINT user_email_unq UNIQUE (email)	-- avoids duplicate entries of artist-album name combinations
+	    CONSTRAINT user_email_unq UNIQUE (email)	-- avoids duplicate entries of email addresses
 		)';
 
 	$dbc->exec($query);		// Executes the code within $query and returns the number of rows affected
@@ -37,7 +37,7 @@
 
 		$dbc->exec($query);
 
-		echo "Inserted id ";
+		echo "Inserted id " . $dbc->lastInsertId() . PHP_EOL;
 	}
 
 
