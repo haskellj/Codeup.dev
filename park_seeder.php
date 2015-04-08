@@ -10,9 +10,16 @@
 	$emptyTable = 'TRUNCATE TABLE national_parks';
 	$dbc->exec($emptyTable);
 
-	$query = 
-		"INSERT INTO national_parks (name, location, date_established, area_in_acres)
-		VALUES ('Acadia', 'Maine', '1919-02-26', 47389.67),
-				('American Samoa', 'American Samoa', '1988-10-31', 9000)";
+	$parks = [
+		['name' => 'Acadia', 'location' => 'Maine', 'date' => '1919-02-26', 'area' => 47389.67],
+		['name' => 'American Samoa', 'location' => 'American Samoa', 'date' => '1988-10-31', 'area' => 9000]
+	];
 
-	$dbc->exec($query);
+	foreach ($parks as $park) {
+		$query = "INSERT INTO national_parks (name, location, date_established, area_in_acres)
+					VALUES ('{$park['name']}', '{$park['location']}', '{$park['date']}', '{$park['area']}')";
+
+		$dbc->exec($query);
+		echo "Inserted ID: ".$dbc->lastInsertId().PHP_EOL;
+	}
+
