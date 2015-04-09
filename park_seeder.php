@@ -19,7 +19,16 @@
 		['name'=>'Biscayne', 		'location'=>'Florida', 			'date'=>'1980-06-28', 'area'=>172924.07],
 		['name'=>'Carlsbad Caverns','location'=>'New Mexico', 		'date'=>'1930-05-14', 'area'=>46766.45],
 		['name'=>'Channel Islands', 'location'=>'California', 		'date'=>'1980-03-05', 'area'=>249561],
-		['name'=>'Denali', 			'location'=>'Alaska', 			'date'=>'1917-02-26', 'area'=>4740911.72]
+		['name'=>'Denali', 			'location'=>'Alaska', 			'date'=>'1917-02-26', 'area'=>4740911.72],
+		['name'=>'Dry Tortugas', 	'location'=>'Florida', 			'date'=>'1992-10-26', 'area'=>64701.22],
+		['name'=>'Everglades', 		'location'=>'Florida', 			'date'=>'1934-05-30', 'area'=>1047116],
+		['name'=>'Grand Canyon', 	'location'=>'Arizona', 			'date'=>'1919-02-26', 'area'=>1217403.32],
+		['name'=>'Grand Teton', 	'location'=>'Wyoming', 			'date'=>'1929-02-26', 'area'=>309994.66],
+		['name'=>'Haleakala', 		'location'=>'Hawaii', 			'date'=>'1916-08-01', 'area'=>29093.67],
+		['name'=>'Isle Royale', 	'location'=>'Michigan', 		'date'=>'1940-04-03', 'area'=>571790.11],
+		['name'=>'Joshua Tree', 	'location'=>'California', 		'date'=>'1994-10-31', 'area'=>789745.47],
+		['name'=>'Katmai', 			'location'=>'Alaska', 			'date'=>'1980-12-02', 'area'=>3674529.68],
+
 	];
 
 	foreach ($parks as $park) {
