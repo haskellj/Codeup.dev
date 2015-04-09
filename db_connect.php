@@ -7,5 +7,5 @@
 	$dbc->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 	// Display the PDO connection status
-	echo $dbc->getAttribute(PDO::ATTR_CONNECTION_STATUS) . "\n";
+	$dbc->getAttribute(PDO::ATTR_CONNECTION_STATUS) . "\n";
 

@@ -16,11 +16,8 @@
 	$next = $page + 1;
 	$previous = $page - 1;
 
-	$stmt = $dbc->query("SELECT * FROM national_parks LIMIT {$perPage} OFFSET {$offset}");
-	print_r($stmt->fetchAll(PDO::FETCH_ASSOC));
-
-
-
+	$parks = $dbc->query("SELECT * FROM national_parks LIMIT {$perPage} OFFSET {$offset}");
+	// print_r($parks->fetchAll(PDO::FETCH_ASSOC));
 
 ?>
 
@@ -28,26 +25,62 @@
 <html>
 <head>
 	<title>Querying Database</title>
+	<style>
+		table {
+			margin-left: auto;
+			margin-right: auto;
+		}
+		#pageControls {text-align: center;} 
+		thead {color:green;}
+		tbody {color:blue;}
+		tfoot {color:red;}
+
+		table, th, td {
+		    border: 1px solid black;
+		}
+	</style>
 </head>
 <body>
-	<!-- Previous Button -->
-	<?php if ($page > 1) { ?>
-		<a href="national_parks.php?page=<?php echo $previous; ?>&per-page=<?php echo $perPage; ?>">Previous</a>
-	<?php } ?>
-	
-	<!-- Links for individual Pages -->
-	<?php for($i = 1; $i <= $totalPages; $i++){ ?>
-		<?php if ($page == $i) { ?>
-			<?php echo $i; ?>
-		<?php } else { ?>
-			<a href="national_parks.php?page=<?php echo $i; ?>&per-page=<?php echo $perPage; ?>"><?php echo $i; ?></a>
+	<!-- Table Displaying Parks -->
+	<table>
+		<thead>
+			<th>Name</th>
+			<th>Location</th>
+			<th>Date Established</th>
+			<th>Area (in acres)</th>
+		</thead>
+		<tbody>
+			<? foreach($parks as $park): ?>
+				<tr>
+				<td> <?= $park['name']; ?></td>
+				<td> <?= $park['location']; ?> </td>
+				<td> <?= $park['date_established']; ?></td>
+				<td> <?= $park['area_in_acres']; ?></td>
+				</tr>
+			<?endforeach; ?>
+		</tbody>
+	</table>
+
+	<div id="pageControls">
+		<!-- Previous Button -->
+		<?php if ($page > 1) { ?>
+			<a href="national_parks.php?page=<?php echo $previous; ?>&per-page=<?php echo $perPage; ?>">Previous</a>
 		<?php } ?>
-	<?php } ?>
-	
-	<!-- Next Button -->
-	<?php if ($page < $totalPages) { ?>
-		<a href="national_parks.php?page=<?php echo $next; ?>&per-page=<?php echo $perPage; ?>">Next</a>
-	<?php } ?>
+		
+		<!-- Links for individual Pages -->
+		<?php for($i = 1; $i <= $totalPages; $i++){ ?>
+			<?php if ($page == $i) { ?>
+				<?php echo $i; ?>
+			<?php } else { ?>
+				<a href="national_parks.php?page=<?php echo $i; ?>&per-page=<?php echo $perPage; ?>"><?php echo $i; ?></a>
+			<?php } ?>
+		<?php } ?>
+		
+		<!-- Next Button -->
+		<?php if ($page < $totalPages) { ?>
+			<a href="national_parks.php?page=<?php echo $next; ?>&per-page=<?php echo $perPage; ?>">Next</a>
+		<?php } ?>
+	</div>
 
 
 
