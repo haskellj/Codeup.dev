@@ -6,7 +6,6 @@
 	define ('DB_PASS', 'password');
 
 	require '../db_connect.php';
-	require '../Input.php';
 
 	$totalParks = $dbc->query("SELECT count(*) FROM national_parks")->fetchColumn();
 	$perPage = (isset($_GET['per-page'])) ? (int)$_GET['per-page'] : 4;
@@ -22,6 +21,24 @@
 	$parks->bindValue(':perPage', $perPage, PDO::PARAM_INT);
 	$parks->bindValue(':offset', $offset, PDO::PARAM_INT);
 	$parks->execute();
+
+	$message = '';
+
+	if (isset($_REQUEST['parkName']) && isset($_REQUEST['parkState']) && isset($_REQUEST['aboutPark'])) {
+		$newPark = $_REQUEST['parkName'];
+		$newState = $_REQUEST['parkState'];
+		$newDate = isset($_REQUEST['dateEstablished']) ? $_REQUEST['dateEstablished'] ? '';
+		$newArea = isset($_REQUEST['areaInAcres']) ? $_REQUEST['areaInAcres'] ? '';
+		$newDesc = $_REQUEST['aboutPark'];
+	}
+	// Still need to finish!!!!!!!!
+	$injection = "INSERT ";
+	$insert = $dbc->prepare($injection);
+	$insert->bindValue(':offset', $offset, PDO::PARAM_INT);
+	$insert->bindValue(':offset', $offset, PDO::PARAM_INT);
+	$insert->bindValue(':offset', $offset, PDO::PARAM_INT);
+	$insert->bindValue(':offset', $offset, PDO::PARAM_INT);
+	$insert->execute();
 ?>
 
 <!DOCTYPE html>
@@ -65,7 +82,7 @@
 			<?endforeach; ?>
 		</tbody>
 	</table>
-
+	<br>
 	<div id="pageControls">
 		<!-- Previous Button -->
 		<?php if ($page > 1) { ?>
@@ -86,31 +103,34 @@
 			<a href="national_parks_wPreparedStatements.php?page=<?php echo $next; ?>&per-page=<?php echo $perPage; ?>">Next</a>
 		<?php } ?>
 	</div>
+	<br>
 	<div id='form'>
 		<h2>Add a Park</h2>
 		<form method="POST" action="national_parks_wPreparedStatements.php">
-			<label for='name'>Name *</label>
+			<p>
+			<label for='name'>Name *</label><br>
 			<input type='text' id='name' name='parkName' placeholder='Acadia' required>
-
-			<label for='location'>State in which it's located *</label>
+			</p>
+			<p>
+			<label for='location'>State in which it's located *</label><br>
 			<input type='text' id='location' name='parkState' placeholder='Maine' required>
-
-			<label for='date'>Date established (if known)</label>
+			</p>
+			<p>
+			<label for='date'>Date established (if known)</label><br>
 			<input type='text' id='date' name='dateEstablished' placeholder='1919-02-26'>
-
-			<label for='area'>Area in acres (if known)</label>
+			</p>
+			<p>
+			<label for='area'>Area in acres (if known)</label><br>
 			<input type='text' id='area' name='areaInAcres' placeholder='47389.67'>		
-			
-			<br>
-			
-			<label for='description'>Describe this park *</label>
+			</p>
+			<p>
+			<label for='description'>Describe this park *</label><br>
 			<textarea type='text' id='description' name='aboutPark' rows='10' cols='125' required></textarea>		
-			
-			<br>
-			
-			<input type='submit'><!-- <span><?php echo $message; ?></span> -->
+			<h6>* indicates a required field</h6>
+			</p>
+			<input type='submit'><span><?php echo $message; ?></span>
 		</form>
-		<h6>* indicates a required field</h6>
+		
 	</div>
 
 
