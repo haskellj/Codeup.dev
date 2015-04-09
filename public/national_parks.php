@@ -30,7 +30,11 @@
 	<title>Querying Database</title>
 </head>
 <body>
-	<a href="national_parks.php?page=<?php echo $previous; ?>&per-page=<?php echo $perPage; ?>">Previous</a>
-	<a href="national_parks.php?page=<?php echo $next; ?>&per-page=<?php echo $perPage; ?>">Next</a>
+	<?php if ($page > 1) { ?>
+		<a href="national_parks.php?page=<?php echo $previous; ?>&per-page=<?php echo $perPage; ?>">Previous</a>
+	<?php } ?>
+	<?php if ($page < $totalPages) { ?>
+		<a href="national_parks.php?page=<?php echo $next; ?>&per-page=<?php echo $perPage; ?>">Next</a>
+	<?php } ?>
 </body>
 </html>
