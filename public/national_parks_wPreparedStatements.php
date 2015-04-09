@@ -11,7 +11,7 @@
 	$perPage = (isset($_GET['per-page'])) ? (int)$_GET['per-page'] : 4;
 	$totalPages = ceil($totalParks / $perPage);
 	
-	$page = (isset($_GET['page']) && $_GET['page'] <= $totalPages) ? (int)$_GET['page'] : 1;
+	$page = ((isset($_GET['page']) && $_GET['page'] <= $totalPages) && is_numeric($_GET['page'])) ? (int)$_GET['page'] : 1;
 	$offset = ($page > 1) ? $page * $perPage - $perPage : 0;
 	$next = $page + 1;
 	$previous = $page - 1;
@@ -85,6 +85,10 @@
 			<a href="national_parks_wPreparedStatements.php?page=<?php echo $next; ?>&per-page=<?php echo $perPage; ?>">Next</a>
 		<?php } ?>
 	</div>
+
+	<form>
+
+	</form>
 
 
 
