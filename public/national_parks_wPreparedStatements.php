@@ -6,6 +6,7 @@
 	define ('DB_PASS', 'password');
 
 	require '../db_connect.php';
+	require '../Input.php';
 
 	$totalParks = $dbc->query("SELECT count(*) FROM national_parks")->fetchColumn();
 	$perPage = (isset($_GET['per-page'])) ? (int)$_GET['per-page'] : 4;
@@ -37,7 +38,7 @@
 		tbody {color:blue;}
 		tfoot {color:red;}
 
-		table, th, td {
+		table, th, td, #form {
 		    border: 1px solid black;
 		}
 	</style>
@@ -85,11 +86,32 @@
 			<a href="national_parks_wPreparedStatements.php?page=<?php echo $next; ?>&per-page=<?php echo $perPage; ?>">Next</a>
 		<?php } ?>
 	</div>
+	<div id='form'>
+		<h2>Add a Park</h2>
+		<form method="POST" action="national_parks_wPreparedStatements.php">
+			<label for='name'>Name *</label>
+			<input type='text' id='name' name='parkName' placeholder='Acadia' required>
 
-	<form>
+			<label for='location'>State in which it's located *</label>
+			<input type='text' id='location' name='parkState' placeholder='Maine' required>
 
-	</form>
+			<label for='date'>Date established (if known)</label>
+			<input type='text' id='date' name='dateEstablished' placeholder='1919-02-26'>
 
+			<label for='area'>Area in acres (if known)</label>
+			<input type='text' id='area' name='areaInAcres' placeholder='47389.67'>		
+			
+			<br>
+			
+			<label for='description'>Describe this park *</label>
+			<textarea type='text' id='description' name='aboutPark' rows='10' cols='125' required></textarea>		
+			
+			<br>
+			
+			<input type='submit'><!-- <span><?php echo $message; ?></span> -->
+		</form>
+		<h6>* indicates a required field</h6>
+	</div>
 
 
 </body>
