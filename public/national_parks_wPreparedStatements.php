@@ -16,15 +16,17 @@
 	$next = $page + 1;
 	$previous = $page - 1;
 
-	$parks = $dbc->query("SELECT * FROM national_parks LIMIT {$perPage} OFFSET {$offset}");
-	// print_r($parks->fetchAll(PDO::FETCH_ASSOC));
-
+	$query = "SELECT * FROM national_parks LIMIT :perPage OFFSET :offset";
+	$parks = $dbc->prepare($query);
+	$parks->bindValue(':perPage', $perPage, PDO::PARAM_INT);
+	$parks->bindValue(':offset', $offset, PDO::PARAM_INT);
+	$parks->execute();
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Querying Database</title>
+	<title>Querying Database w/ User Input</title>
 	<style>
 		table {
 			margin-left: auto;
