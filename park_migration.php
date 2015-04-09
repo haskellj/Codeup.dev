@@ -16,6 +16,7 @@
 	    location VARCHAR (240) NOT NULL,
 	    date_established DATE NOT NULL,
 	    area_in_acres DOUBLE(10,2) NOT NULL,
+	    description TEXT NOT NULL,
 	    PRIMARY KEY (id), 
 	    CONSTRAINT user_name_unq UNIQUE (name)	-- avoids duplicate entries of parks
 		)';

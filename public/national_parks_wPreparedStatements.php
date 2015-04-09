@@ -50,6 +50,7 @@
 			<th>Location</th>
 			<th>Date Established</th>
 			<th>Area (in acres)</th>
+			<th>Park Description</th>
 		</thead>
 		<tbody>
 			<? foreach($parks as $park): ?>
@@ -58,6 +59,7 @@
 				<td> <?= $park['location']; ?> </td>
 				<td> <?= $park['date_established']; ?></td>
 				<td> <?= $park['area_in_acres']; ?></td>
+				<td> <?= $park['description']; ?></td>
 				</tr>
 			<?endforeach; ?>
 		</tbody>
@@ -74,13 +76,13 @@
 			<?php if ($page == $i) { ?>
 				<?php echo $i; ?>
 			<?php } else { ?>
-				<a href="national_parks.php?page=<?php echo $i; ?>&per-page=<?php echo $perPage; ?>"><?php echo $i; ?></a>
+				<a href="national_parks_wPreparedStatements.php?page=<?php echo $i; ?>&per-page=<?php echo $perPage; ?>"><?php echo $i; ?></a>
 			<?php } ?>
 		<?php } ?>
 		
 		<!-- Next Button -->
 		<?php if ($page < $totalPages) { ?>
-			<a href="national_parks.php?page=<?php echo $next; ?>&per-page=<?php echo $perPage; ?>">Next</a>
+			<a href="national_parks_wPreparedStatements.php?page=<?php echo $next; ?>&per-page=<?php echo $perPage; ?>">Next</a>
 		<?php } ?>
 	</div>
 
