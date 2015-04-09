@@ -28,13 +28,28 @@
 <html>
 <head>
 	<title>Querying Database</title>
+	<style>
+		a.disabled {
+			color: grey;
+			text-decoration: none;
+		}
+
+	</style>
 </head>
 <body>
+	<!-- Previous Button -->
 	<?php if ($page > 1) { ?>
 		<a href="national_parks.php?page=<?php echo $previous; ?>&per-page=<?php echo $perPage; ?>">Previous</a>
 	<?php } ?>
+	<!-- Links for individual Pages -->
+	<?php for($i=1; $i<=$totalPages; $i++){ ?>
+		<a href="national_parks.php?page=<?php echo $i; ?>&per-page=<?php echo $perPage; ?>"><?php echo $i; ?></a>
+	<?php } ?>
+	<!-- Next Button -->
 	<?php if ($page < $totalPages) { ?>
 		<a href="national_parks.php?page=<?php echo $next; ?>&per-page=<?php echo $perPage; ?>">Next</a>
 	<?php } ?>
+
+
 </body>
 </html>
