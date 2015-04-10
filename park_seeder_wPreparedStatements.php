@@ -33,7 +33,7 @@
 	
 	// Query and Prepare the database once, before the foreach loop
 	$query = "INSERT INTO national_parks (name, location, date_established, area_in_acres, description)
-				VALUES (:name, :location, :date_est, :area, :description)";
+				VALUES (:name, :location, str_to_date(:date_est, '%Y-%m-%d'), :area, :description)";
 	$stmt = $dbc->prepare($query);
 	
 	foreach ($parks as $park) {	

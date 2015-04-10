@@ -9,11 +9,18 @@
 
 	// Retrieve and sanitize user input into 'Add a Park' form
 	if (isset($_POST['parkName']) && isset($_POST['parkState']) && isset($_POST['aboutPark'])) {
-		$newPark = htmlspecialchars(strip_tags($_POST['parkName']));
-		$newState = htmlspecialchars(strip_tags($_POST['parkState']));
-		$newDate = isset($_POST['dateEstablished']) ? htmlspecialchars(strip_tags($_POST['dateEstablished'])) : '';
-		$newArea = isset($_POST['areaInAcres']) ? htmlspecialchars(strip_tags($_POST['areaInAcres'])) : '';
-		$newDesc = htmlspecialchars(strip_tags($_POST['aboutPark']));
+		$newPark = $_POST['parkName'];
+		$newState = $_POST['parkState'];
+		$newArea = !empty($_POST['areaInAcres']) ? $_POST['areaInAcres'] : 0;
+		$newDesc = $_POST['aboutPark'];
+		// Re-format the user inputted date to the correct format, using PHP library functions, before passing to MySQL 
+		// If date field is left blank by the user, default to today's date
+		if (!empty($_POST['dateEstablished'])) {
+			$userDate = date_create($_POST['dateEstablished']);
+			$newDate = date_format($userDate, 'Y-m-d');
+		} else {
+			$newDate = date('Y-m-d');
+		}
 	
 		// Add to database with user input from the form
 		$userInput = "INSERT INTO national_parks (name, location, date_established, area_in_acres, description)
@@ -32,8 +39,13 @@
 	$totalParks = $dbc->query("SELECT count(*) FROM national_parks")->fetchColumn();
 	$perPage = (isset($_GET['per-page'])) ? (int)$_GET['per-page'] : 4;
 	$totalPages = ceil($totalParks / $perPage);
-	
-	$page = (isset($_GET['page']) && $_GET['page'] <= $totalPages && $_GET['page'] > 0 && is_numeric($_GET['page'])) ? (int)$_GET['page'] : 1;
+
+	if (!isset($_GET['page']) || $_GET['page'] < 0 || !is_numeric($_GET['page']) || $_GET['page'] > $totalPages) {
+		$page = 1;
+	} else {
+			$page = (int)$_GET['page'];
+		}
+	// $page = (isset($_GET['page']) && $_GET['page'] <= $totalPages && $_GET['page'] > 0 && is_numeric($_GET['page'])) ? (int)$_GET['page'] : 1;
 	$offset = ($page > 1) ? $page * $perPage - $perPage : 0;
 	$next = $page + 1;
 	$previous = $page - 1;
@@ -93,7 +105,7 @@
 	<div id="pageControls">
 		<!-- Previous Button -->
 		<?php if ($page > 1) { ?>
-			<a href="national_parks.php?page=<?php echo $previous; ?>&per-page=<?php echo $perPage; ?>">Previous</a>
+			<a href="national_parks_wPreparedStatements.php?page=<?php echo $previous; ?>&per-page=<?php echo $perPage; ?>">Previous</a>
 		<?php } ?>
 		
 		<!-- Links for individual Pages -->
