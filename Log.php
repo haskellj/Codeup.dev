@@ -1,18 +1,38 @@
 <?php
 	class Log
 	{
-		public $filename; 
-		public $handle;
+		protected $filename; 
+		private $handle;
 
 		// This function runs automatically whenever the class is instantiated
 		public function __construct($prefix='log')
+		{
+			$this->setFilename($prefix);
+			$this->setHandle();
+		}
+
+		protected function setFilename($prefix)
 		{
 			// Set timezone and date format
 		    date_default_timezone_set('America/Chicago');
 			$date = date('Y-m-d');
 
-			$this->filename = "{$prefix}-{$date}.log";
-			$this->handle = fopen($this->filename, 'a+');
+			if(is_string($prefix)) {
+				$this->filename = "{$prefix}-{$date}.log";
+			} else {
+				$this->filename = "log-{$date}.log";
+			}
+		}
+
+		public function getFilename()
+		{
+			return $this->filename;
+		}
+
+		protected function setHandle()
+		{
+			$thisFilename = $this->getFilename();
+			$this->handle = fopen($thisFilename, 'a+');
 		}
 
 		public function logMessage($logLevel, $message)
