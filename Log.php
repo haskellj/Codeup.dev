@@ -35,6 +35,11 @@
 			$this->handle = fopen($thisFilename, 'a+');
 		}
 
+		public function getHandle()
+		{
+			return $this->handle;
+		}
+
 		public function logMessage($logLevel, $message)
 		{
 		    // Set timezone and date format
@@ -61,7 +66,7 @@
 		// This function runs automatically whenever the class is instantiated
 		public function __destruct()
 		{
-			fclose($this->handle);
+			fclose($this->getHandle());
 		}
 	}
 ?>
