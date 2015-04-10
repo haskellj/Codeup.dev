@@ -7,11 +7,33 @@
 
 	require '../db_connect.php';
 
+	// Retrieve and sanitize user input into 'Add a Park' form
+	if (isset($_POST['parkName']) && isset($_POST['parkState']) && isset($_POST['aboutPark'])) {
+		$newPark = htmlspecialchars(strip_tags($_POST['parkName']));
+		$newState = htmlspecialchars(strip_tags($_POST['parkState']));
+		$newDate = isset($_POST['dateEstablished']) ? htmlspecialchars(strip_tags($_POST['dateEstablished'])) : '';
+		$newArea = isset($_POST['areaInAcres']) ? htmlspecialchars(strip_tags($_POST['areaInAcres'])) : '';
+		$newDesc = htmlspecialchars(strip_tags($_POST['aboutPark']));
+	
+		// Add to database with user input from the form
+		$userInput = "INSERT INTO national_parks (name, location, date_established, area_in_acres, description)
+						VALUES (:name, :location, :date_est, :area, :description)";
+		$insert = $dbc->prepare($userInput);
+
+		$insert->bindValue(':name', $newPark, PDO::PARAM_STR);
+		$insert->bindValue(':location', $newState, PDO::PARAM_STR);
+		$insert->bindValue(':date_est', $newDate, PDO::PARAM_STR);
+		$insert->bindValue(':area', $newArea, PDO::PARAM_STR);
+		$insert->bindValue(':description', $newDesc, PDO::PARAM_STR);
+		$insert->execute();
+	}
+
+
 	$totalParks = $dbc->query("SELECT count(*) FROM national_parks")->fetchColumn();
 	$perPage = (isset($_GET['per-page'])) ? (int)$_GET['per-page'] : 4;
 	$totalPages = ceil($totalParks / $perPage);
 	
-	$page = ((isset($_GET['page']) && $_GET['page'] <= $totalPages) && is_numeric($_GET['page'])) ? (int)$_GET['page'] : 1;
+	$page = (isset($_GET['page']) && $_GET['page'] <= $totalPages && $_GET['page'] > 0 && is_numeric($_GET['page'])) ? (int)$_GET['page'] : 1;
 	$offset = ($page > 1) ? $page * $perPage - $perPage : 0;
 	$next = $page + 1;
 	$previous = $page - 1;
@@ -22,23 +44,8 @@
 	$parks->bindValue(':offset', $offset, PDO::PARAM_INT);
 	$parks->execute();
 
-	$message = '';
 
-	if (isset($_REQUEST['parkName']) && isset($_REQUEST['parkState']) && isset($_REQUEST['aboutPark'])) {
-		$newPark = $_REQUEST['parkName'];
-		$newState = $_REQUEST['parkState'];
-		$newDate = isset($_REQUEST['dateEstablished']) ? $_REQUEST['dateEstablished'] ? '';
-		$newArea = isset($_REQUEST['areaInAcres']) ? $_REQUEST['areaInAcres'] ? '';
-		$newDesc = $_REQUEST['aboutPark'];
-	}
-	// Still need to finish!!!!!!!!
-	$injection = "INSERT ";
-	$insert = $dbc->prepare($injection);
-	$insert->bindValue(':offset', $offset, PDO::PARAM_INT);
-	$insert->bindValue(':offset', $offset, PDO::PARAM_INT);
-	$insert->bindValue(':offset', $offset, PDO::PARAM_INT);
-	$insert->bindValue(':offset', $offset, PDO::PARAM_INT);
-	$insert->execute();
+
 ?>
 
 <!DOCTYPE html>
@@ -108,27 +115,25 @@
 		<h2>Add a Park</h2>
 		<form method="POST" action="national_parks_wPreparedStatements.php">
 			<p>
-			<label for='name'>Name *</label><br>
+			<label for='name'>Name*</label><br>
 			<input type='text' id='name' name='parkName' placeholder='Acadia' required>
 			</p>
 			<p>
-			<label for='location'>State in which it's located *</label><br>
+			<label for='location'>State in which it's located*</label><br>
 			<input type='text' id='location' name='parkState' placeholder='Maine' required>
 			</p>
 			<p>
-			<label for='date'>Date established (if known)</label><br>
+			<label for='date'>Date established</label><br>
 			<input type='text' id='date' name='dateEstablished' placeholder='1919-02-26'>
 			</p>
 			<p>
-			<label for='area'>Area in acres (if known)</label><br>
+			<label for='area'>Area in acres</label><br>
 			<input type='text' id='area' name='areaInAcres' placeholder='47389.67'>		
 			</p>
-			<p>
-			<label for='description'>Describe this park *</label><br>
-			<textarea type='text' id='description' name='aboutPark' rows='10' cols='125' required></textarea>		
+			<label for='description'>Describe this park*</label><br>
+			<textarea type='text' id='description' name='aboutPark' rows='10' cols='125' required></textarea><br>		
+			<input type='submit'>
 			<h6>* indicates a required field</h6>
-			</p>
-			<input type='submit'><span><?php echo $message; ?></span>
 		</form>
 		
 	</div>
