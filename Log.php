@@ -1,4 +1,5 @@
 <?php
+	// codeup.dev/login2.php is an example file that uses this class
 	class Log
 	{
 		protected $filename; 
@@ -35,8 +36,7 @@
 		// Sets the private handle when the class is insantiated, via the __construct() method
 		protected function setHandle()
 		{
-			$thisFilename = $this->getFilename();
-			$this->handle = fopen($thisFilename, 'a+');
+			$this->handle = fopen($this->filename, 'a+');
 		}
 
 		// Allows access to the handle, but not the ability to alter it
