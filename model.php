@@ -21,3 +21,15 @@
 			return null;
 		}
 	}
+
+	// Test class:
+	$new = new Model();
+	$new->name = 'Sir Test';
+	$new->group = 'Knights of the CodeTable';
+	$new->age = 35;
+	$new->motto = 'This code shall not pass!';
+
+	echo $new->name.PHP_EOL;
+	echo $new->group.PHP_EOL;
+	echo $new->age.PHP_EOL;
+	echo $new->motto.PHP_EOL;
