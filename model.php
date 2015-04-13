@@ -3,6 +3,7 @@
 	class Model
 	{
 		private $attributes = array();
+		protected static $table;
 
 		// Magic setter to populate the $attributes array
 		public function __set($name, $value)
@@ -19,6 +20,11 @@
 			}
 
 			return null;
+		}
+
+		public static function getTableName()
+		{
+			return static::$table;
 		}
 	}
 
