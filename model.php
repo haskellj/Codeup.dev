@@ -35,9 +35,7 @@
 	    		
 	    		echo "You are connected to the database.\n";
 
-	        } else {
-	        	echo "Connection to the database failed\n";
-	    	}
+	        } 
 	    }
 
 		// Magic setter to populate the $attributes array
@@ -67,43 +65,55 @@
 	    {
 	        // Ensure there are attributes before attempting to save
 	        if (!empty($this->attributes)) {
-
-	        	// Use prepared statements to ensure data security
-	        	$insertQuery = "INSERT INTO " . static::$table . " (name, location, date_established, area_in_acres, description)
-									VALUES (:name, :location, :date_est, :area, :description)";
-				$insert = self::$dbc->prepare($insertQuery);
-				
-				$updateQuery = "UPDATE " . static::$table . 
-									" SET name= :name, location= :location, date_established= :date_est, 
-										area_in_acres= :area, description= :description
-									WHERE id= :id";			
-				$update = self::$dbc->prepare($updateQuery);
-
-	        	// You will need to iterate through all the attributes to bind the placeholder variables in the prepared query to their values
-		        // foreach($this->attributes as $key => $value) {
-
-			        // Perform the proper action - if the `id` is set, this is an update, if not it is a insert
-			        // If inserting new id, add the id to the attributes array so the object can properly reflect the id as well
-		        	if(isset($this->attributes["id"])){
-		        		$update->bindValue(":name", $this->attributes["name"], PDO::PARAM_STR);
-						$update->bindValue(":location", $this->attributes["location"], PDO::PARAM_STR);
-						$update->bindValue(":date_est", $this->attributes["date"], PDO::PARAM_STR);
-						$update->bindValue(":area", $this->attributes["area"], PDO::PARAM_STR);
-						$update->bindValue(":description", $this->attributes["description"], PDO::PARAM_STR);
-						$update->bindValue(":id", $this->attributes["id"], PDO::PARAM_INT);
-						$update->execute();
-		        	} else {
-		        		$insert->bindValue(":name", $this->attributes["name"], PDO::PARAM_STR);
-						$insert->bindValue(":location", $this->attributes["location"], PDO::PARAM_STR);
-						$insert->bindValue(":date_est", $this->attributes["date"], PDO::PARAM_STR);
-						$insert->bindValue(":area", $this->attributes["area"], PDO::PARAM_STR);
-						$insert->bindValue(":description", $this->attributes["description"], PDO::PARAM_STR);
-						$insert->execute();
-						
-						$this->id = self::$dbc->lastInsertId();
-		        	}
-				// }	        	
+	        	// Perform the proper action - if the `id` is set, this is an update, if not it is a insert
+		        // Attempt to insert, but if a 'duplicate' exception is thrown, attempt to update intead
+		        if (!isset($this->id)) {
+		        	$this->insert();
+		        } else {
+		        	$this->update();
+		        }
 			}
+		}
+
+		public function insert()
+		{
+        	// Use prepared statements to ensure data security
+        	$insertQuery = "INSERT INTO " . static::$table . " (name, location, date_established, area_in_acres, description)
+								VALUES (:name, :location, :date_est, :area, :description)";
+			
+			$insert = self::$dbc->prepare($insertQuery);
+    		
+    		$insert->bindValue(":name", $this->name, PDO::PARAM_STR);
+			$insert->bindValue(":location", $this->location, PDO::PARAM_STR);
+			$insert->bindValue(":date_est", $this->date, PDO::PARAM_STR);
+			$insert->bindValue(":area", $this->area, PDO::PARAM_STR);
+			$insert->bindValue(":description", $this->description, PDO::PARAM_STR);
+			$insert->execute();
+
+			// If inserting new id, add the id to the attributes array so the object can properly reflect the id as well
+			$this->id = self::$dbc->lastInsertId();
+		}
+
+		public function update()
+		{
+			// Use prepared statements to ensure data security
+			$updateQuery = "UPDATE " . static::$table . 
+								" SET name= :name, location= :location, date_established= :date_est, 
+									area_in_acres= :area, description= :description
+								WHERE id= :id";			
+			$update = self::$dbc->prepare($updateQuery);
+
+        	// You will need to iterate through all the attributes to bind the placeholder variables in the prepared query to their values
+	        // foreach($this->attributes as $key => $value) {
+
+    		$update->bindValue(":name", $this->attributes["name"], PDO::PARAM_STR);
+			$update->bindValue(":location", $this->attributes["location"], PDO::PARAM_STR);
+			$update->bindValue(":date_est", $this->attributes["date"], PDO::PARAM_STR);
+			$update->bindValue(":area", $this->attributes["area"], PDO::PARAM_STR);
+			$update->bindValue(":description", $this->attributes["description"], PDO::PARAM_STR);
+			$update->bindValue(":id", $this->attributes["id"], PDO::PARAM_INT);
+			$update->execute();
+	        	
 		}
 
 	    // Find a record based on an id
@@ -113,11 +123,14 @@
 	        self::dbConnect();
 
 	        // @TODO: Create select statement using prepared statements
+	        $stmt = self::$dbc->prepare("SELECT * FROM " . static::$table . " WHERE id = :id");
+			$stmt->bindValue(':id', $id, PDO::PARAM_INT);
+			$stmt->execute();
+			$result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-	        // @TODO: Store the resultset in a variable named $result
 
-	        // The following code will set the attributes on the calling object based on the result variable's contents
-
+	        // The following code will create a new object instance of the Model class. 
+	        // Its attributes array will contain the record of the found id
 	        $instance = null;
 	        if ($result)
 	        {
@@ -132,21 +145,23 @@
 	    {
 	        self::dbConnect();
 
-	        // @TODO: Learning from the previous method, return all the matching records
+	        return self::$dbc->query('SELECT * FROM ' . static::$table . ';')->fetchAll(PDO::FETCH_ASSOC);
 	    }
 
 	}
 
 	// Test class:
-	$AishaTyler = new Model();
-	$AishaTyler->name = "Aisha Tyler";
-	$AishaTyler->location = "Hollywood";
-	$AishaTyler->date = "2015-04-14";
-	$AishaTyler->area = "0.3";
-	$AishaTyler->description = "She is a model and the current host of Who's Line is it Anyway";
+	// $blah = new Model();
+	// $blah->name = "Mrs. Blah";
+	// $blah->location = "Canada";
+	// $blah->date = "2015-04-11";
+	// $blah->area = "0.5";
+	// $blah->description = "She is a country music singer.";
 	
-	// $AishaTyler->save();
+	// $blah->save();
 	
+	// print_r(Model::find('22'));
+	print_r(Model::all());
 
-	print_r($AishaTyler->attributes);
+	// print_r($AishaTyler->attributes);
 	
