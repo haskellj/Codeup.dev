@@ -30,7 +30,7 @@ class Input
         $keyValue = self::get($key);
 
         if(!is_string($keyValue) || !isset($keyValue) || is_numeric($keyValue)){
-            throw new exception ("$key must exist AND be a string!");
+            throw new exception ("$key must be a string!");
         }
 
         return trim($keyValue);
@@ -41,7 +41,7 @@ class Input
         $keyValue = trim(self::get($key));
 
         if(!is_numeric($keyValue) || !isset($keyValue)){
-            throw new exception ("$key must exist AND be a number!");
+            throw new exception ("$key must be a number!");
         }
 
         return (float)$keyValue;

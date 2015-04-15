@@ -8,32 +8,44 @@
 	require '../db_connect.php';
 	require '../Input.php';
 
+	// initialize an array to catch all the error messages
+	$errors = [];
+
 	// Retrieve and sanitize user input into 'Add a Park' form
 	if (!empty($_POST)) {
-		$newPark = Input::getString('parkName');
-		$newState = Input::getString('parkState');
-		$newArea = !empty($_POST['areaInAcres']) ? Input::getNumber('areaInAcres') : 0;
-		$newDesc = Input::getString('aboutPark');
-		// Re-format the user inputted date to the correct format, using PHP library functions, before passing to MySQL 
-		// If date field is left blank by the user, default to today's date
-		if (!empty($_POST['dateEstablished'])) {
-			$userDate = date_create($_POST['dateEstablished']);
-			$newDate = date_format($userDate, 'Y-m-d');
-		} else {
-			$newDate = date('Y-m-d');
+		try {
+			$newPark = Input::getString('parkName');
+			$newState = Input::getString('parkState');
+			$newArea = !empty($_POST['areaInAcres']) ? Input::getNumber('areaInAcres') : 0;
+			$newDesc = Input::getString('aboutPark');
+		
+			// Re-format the user inputted date to the correct format, using PHP library functions, before passing to MySQL 
+			// If date field is left blank by the user, default to today's date
+			if (!empty($_POST['dateEstablished'])) {
+				$userDate = date_create($_POST['dateEstablished']);
+				$newDate = date_format($userDate, 'Y-m-d');
+			} else {
+				$newDate = date('Y-m-d');
+			}
+		} catch (Exception $e) {
+			$message = $e->getMessage();
+			$errors[] = $message;
+			// echo "<script type='text/javascript'>alert('$message');</script>";
 		}
 	
-		// Add to database with user input from the form
-		$userInput = "INSERT INTO national_parks (name, location, date_established, area_in_acres, description)
-						VALUES (:name, :location, :date_est, :area, :description)";
-		$insert = $dbc->prepare($userInput);
+		if (empty($errors)) {
+			// Add to database with user input from the form
+			$userInput = "INSERT INTO national_parks (name, location, date_established, area_in_acres, description)
+							VALUES (:name, :location, :date_est, :area, :description)";
+			$insert = $dbc->prepare($userInput);
 
-		$insert->bindValue(':name', $newPark, PDO::PARAM_STR);
-		$insert->bindValue(':location', $newState, PDO::PARAM_STR);
-		$insert->bindValue(':date_est', $newDate, PDO::PARAM_STR);
-		$insert->bindValue(':area', $newArea, PDO::PARAM_STR);
-		$insert->bindValue(':description', $newDesc, PDO::PARAM_STR);
-		$insert->execute();
+			$insert->bindValue(':name', $newPark, PDO::PARAM_STR);
+			$insert->bindValue(':location', $newState, PDO::PARAM_STR);
+			$insert->bindValue(':date_est', $newDate, PDO::PARAM_STR);
+			$insert->bindValue(':area', $newArea, PDO::PARAM_STR);
+			$insert->bindValue(':description', $newDesc, PDO::PARAM_STR);
+			$insert->execute();
+		}
 	}
 
 
@@ -125,6 +137,13 @@
 	</div>
 	<br>
 	<div id='form'>
+		<?php if (!empty($errors)) { ?>
+			<ul>
+			<?php foreach($errors as $error){ ?>
+				<li> <?= $error; ?> </li>
+			<?php } ?>
+			</ul>
+		<?php } ?>
 		<h2>Add a Park</h2>
 		<form method="POST" action="national_parks_wPreparedStatements.php">
 			<p>
