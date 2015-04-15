@@ -9,11 +9,11 @@
 	require '../Input.php';
 
 	// Retrieve and sanitize user input into 'Add a Park' form
-	if (isset($_POST['parkName']) && isset($_POST['parkState']) && isset($_POST['aboutPark'])) {
-		$newPark = trim($_POST['parkName']);
-		$newState = trim($_POST['parkState']);
-		$newArea = !empty($_POST['areaInAcres']) ? trim($_POST['areaInAcres']) : 0;
-		$newDesc = trim($_POST['aboutPark']);
+	if (!empty($_POST)) {
+		$newPark = Input::getString('parkName');
+		$newState = Input::getString('parkState');
+		$newArea = !empty($_POST['areaInAcres']) ? Input::getNumber('areaInAcres') : 0;
+		$newDesc = Input::getString('aboutPark');
 		// Re-format the user inputted date to the correct format, using PHP library functions, before passing to MySQL 
 		// If date field is left blank by the user, default to today's date
 		if (!empty($_POST['dateEstablished'])) {
@@ -128,23 +128,23 @@
 		<h2>Add a Park</h2>
 		<form method="POST" action="national_parks_wPreparedStatements.php">
 			<p>
-			<label for='name'>Name*</label><br>
-			<input type='text' id='name' name='parkName' placeholder='Acadia' required>
+			<label for='name'></label>
+			<input type='text' id='name' name='parkName' placeholder='Park Name' required>*
 			</p>
 			<p>
-			<label for='location'>*</label><br>
-			<input type='text' id='location' name='parkState' placeholder="State in which it's located" required>
+			<label for='location'></label>
+			<input type='text' id='location' name='parkState' placeholder="State where located" required>*
 			</p>
 			<p>
-			<label for='date'></label><br>
+			<label for='date'></label>
 			<input type='text' id='date' name='dateEstablished' placeholder='Date established: YYY-MM-DD'>
 			</p>
 			<p>
-			<label for='area'></label><br>
+			<label for='area'></label>
 			<input type='text' id='area' name='areaInAcres' placeholder='Area in acres'>		
 			</p>
-			<label for='description'>*</label><br>
-			<textarea type='text' id='description' name='aboutPark' rows='10' cols='125' placeholder= 'Describe this park' required></textarea><br>		
+			<label for='description'></label>
+			<textarea type='text' id='description' name='aboutPark' rows='10' cols='125' placeholder= 'Describe this park' required></textarea>*<br>		
 			<input type='submit'>
 			<h6>* indicates a required field</h6>
 		</form>

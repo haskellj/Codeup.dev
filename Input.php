@@ -29,11 +29,11 @@ class Input
     {
         $keyValue = self::get($key);
 
-        if(!is_string($keyValue) || !isset($keyValue)){
-            throw new exception ('$key must exist AND be a string!');
+        if(!is_string($keyValue) || !isset($keyValue) || is_numeric($keyValue)){
+            throw new exception ("$key must exist AND be a string!");
         }
 
-        return $keyValue;
+        return trim($keyValue);
     }
 
     public static function getNumber($key)
@@ -41,7 +41,7 @@ class Input
         $keyValue = self::get($key);
 
         if(!is_numeric($keyValue) || !isset($keyValue)){
-            throw new exception ('$key must exist AND be a number!');
+            throw new exception ("$key must exist AND be a number!");
         }
 
         return (float)$keyValue;
