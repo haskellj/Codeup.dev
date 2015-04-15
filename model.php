@@ -65,25 +65,36 @@
 	    {
 	        // Ensure there are attributes before attempting to save
 	        if (!empty($this->attributes)) {
+
+	        	// Get column names as an array, create a duplicate for prepared statement placeholders
+				$columns = array_keys($this->attributes);
+				$columnsPlaceholders = $columns;
+				// $columns = implode(',', $columns);	// creates a string of comma-separated column names
+
+				// Concatinate a colon to the front of each of the placeholders for use in the query
+				array_walk($columnsPlaceholders, function(&$value, $key) {$value = ':' . $value;});
+
+				// $columnsPlaceholders = implode(',', $columnsPlaceholders);	// creates a string of comma-separated placeholder names, after the colons have been added to the front of them
+	        	$this->update($columns, $columnsPlaceholders);
 	        	// Perform the proper action - if the `id` is set, this is an update, if not it is a insert
 		        // Attempt to insert, but if a 'duplicate' exception is thrown, attempt to update intead
-		        if (!isset($this->id)) {
-		        	$this->insert();
-		        } else {
-		        	$this->update();
-		        }
+		        // if (!isset($this->id)) {
+		        // 	$this->insert($columns, $columnsPlaceholders);
+		        // } else {
+		        // 	$this->update($columns, $columnsPlaceholders);
+		        // }
 			}
 		}
 
-		public function insert()
+		public function insert($columns, $columnsPlaceholders)
 		{
-			// Get column names as an array, create a duplicate for prepared statement placeholders
-			$columns = array_keys($this->attributes);
-			$columnsPlaceholders = $columns;
+			// // Get column names as an array, create a duplicate for prepared statement placeholders
+			// $columns = array_keys($this->attributes);
+			// $columnsPlaceholders = $columns;
 			$columns = implode(',', $columns);	// creates a string of comma-separated column names
 
-			// Concatinate a colon to the front of each of the placeholders for use in the query
-			array_walk($columnsPlaceholders, function(&$value, $key) {$value = ':' . $value;});
+			// // Go through the placeholders array and put a colon on the front of each of the values for use in the query
+			// array_walk($columnsPlaceholders, function(&$value, $key) {$value = ':' . $value;});
 			$columnsPlaceholders = implode(',', $columnsPlaceholders);	// creates a string of comma-separated placeholder names, after the colons have been added to the front of them
 
         	// Use prepared statements to ensure data security
@@ -92,10 +103,7 @@
 
 			$insert = self::$dbc->prepare($insertQuery);
 
-			// Get a comma-separated string of values to be inserted
-			// $valuesArray = array_values($this->attributes);
-			// $values = implode(', ', $valuesArray);
-
+        	// You will need to iterate through all the attributes to bind the placeholder variables in the prepared query to their values
 			foreach ($this->attributes as $key => $attribute) {
 	    		$insert->bindValue(":" . $key, $attribute, PDO::PARAM_STR);
 			}
@@ -106,25 +114,38 @@
 			$this->id = self::$dbc->lastInsertId();
 		}
 
-		public function update()
+		public function update($columns, $columnsPlaceholders)
 		{
-			// Use prepared statements to ensure data security
-			// Dynamically build the query by creating an imploded array of the table's field names
+			// Go through the placeholders array and put a comma at the back of each value for use in the query,
+			array_walk($columnsPlaceholders, function(&$value, $key) {$value = $value . ',';});
+			// But remove the comma from the last value
+			$lastElement = array_pop($columnsPlaceholders);
+			$lastElement = str_split($lastElement);
+			array_pop($lastElement);
+			$lastElement = implode($lastElement);
+			array_push($columnsPlaceholders, $lastElement);
+
+
+			// Combine the columns and placeholders array into a single array where the columns are the keys and the placeholders are the values
+			// Create an empty variable to concatinate onto when looping through the combined array
+			$combinedArray = array_combine($columns, $columnsPlaceholders);
+			$set = '';
+			
+			foreach ($combinedArray as $key => $value) {
+				$set .= "$key = $value "; 
+			}
+
+			// Dynamically build the update statement
 			$updateQuery = "UPDATE " . static::$table . 
-								" SET name= :name, location= :location, date_established= :date_est, 
-									area_in_acres= :area, description= :description
-								WHERE id= :id";			
+								" SET " . $set .
+								"WHERE id= :id";			
 			$update = self::$dbc->prepare($updateQuery);
 
         	// You will need to iterate through all the attributes to bind the placeholder variables in the prepared query to their values
-	        // foreach($this->attributes as $key => $value) {
+	        foreach ($this->attributes as $key => $attribute) {
+	    		$update->bindValue(":" . $key, $attribute, PDO::PARAM_STR);
+			}
 
-    		$update->bindValue(":name", $this->name, PDO::PARAM_STR);
-			$update->bindValue(":location", $this->location, PDO::PARAM_STR);
-			$update->bindValue(":date_est", $this->date, PDO::PARAM_STR);
-			$update->bindValue(":area", $this->area, PDO::PARAM_STR);
-			$update->bindValue(":description", $this->description, PDO::PARAM_STR);
-			$update->bindValue(":id", $this->id, PDO::PARAM_INT);
 			$update->execute();
 	        	
 		}
@@ -175,18 +196,19 @@
 
 	// Test class:
 	// $blah = new Model();
-	// $blah->name = "Blah Jr.";
+	// $blah->id = 50;
+	// $blah->name = "Blah III";
 	// $blah->location = "Canada";
-	// $blah->date = "2015-04-11";
-	// $blah->area = "0.5";
+	// $blah->date_established = "2015-04-11";
+	// $blah->area_in_acres = "0.5";
 	// $blah->description = "She is a country music singer.";
 	
 	// $blah->save();
 	
-	// print_r(Model::find('22'));
-	// print_r(Model::all());
+	// // print_r(Model::find('22'));
+	// // print_r(Model::all());
 
-	// print_r($AishaTyler->attributes);
+	// // print_r($AishaTyler->attributes);
 
-	Model::getColumnNames();
+	// Model::getColumnNames();
 	
