@@ -38,7 +38,7 @@ class Input
 
     public static function getNumber($key)
     {
-        $keyValue = self::get($key);
+        $keyValue = trim(self::get($key));
 
         if(!is_numeric($keyValue) || !isset($keyValue)){
             throw new exception ("$key must exist AND be a number!");
