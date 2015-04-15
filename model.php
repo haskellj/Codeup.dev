@@ -77,17 +77,29 @@
 
 		public function insert()
 		{
+			// Get column names as an array, create a duplicate for prepared statement placeholders
+			$columns = array_keys($this->attributes);
+			$columnsPlaceholders = $columns;
+			$columns = implode(',', $columns);	// creates a string of comma-separated column names
+
+			// Concatinate a colon to the front of each of the placeholders for use in the query
+			array_walk($columnsPlaceholders, function(&$value, $key) {$value = ':' . $value;});
+			$columnsPlaceholders = implode(',', $columnsPlaceholders);	// creates a string of comma-separated placeholder names, after the colons have been added to the front of them
+
         	// Use prepared statements to ensure data security
-        	$insertQuery = "INSERT INTO " . static::$table . " (name, location, date_established, area_in_acres, description)
-								VALUES (:name, :location, :date_est, :area, :description)";
-			
+        	$insertQuery = "INSERT INTO " . static::$table . " (" . $columns . ") 
+        						VALUES (" . $columnsPlaceholders . ")";
+
 			$insert = self::$dbc->prepare($insertQuery);
-    		
-    		$insert->bindValue(":name", $this->name, PDO::PARAM_STR);
-			$insert->bindValue(":location", $this->location, PDO::PARAM_STR);
-			$insert->bindValue(":date_est", $this->date, PDO::PARAM_STR);
-			$insert->bindValue(":area", $this->area, PDO::PARAM_STR);
-			$insert->bindValue(":description", $this->description, PDO::PARAM_STR);
+
+			// Get a comma-separated string of values to be inserted
+			// $valuesArray = array_values($this->attributes);
+			// $values = implode(', ', $valuesArray);
+
+			foreach ($this->attributes as $key => $attribute) {
+	    		$insert->bindValue(":" . $key, $attribute, PDO::PARAM_STR);
+			}
+
 			$insert->execute();
 
 			// If inserting new id, add the id to the attributes array so the object can properly reflect the id as well
@@ -97,6 +109,7 @@
 		public function update()
 		{
 			// Use prepared statements to ensure data security
+			// Dynamically build the query by creating an imploded array of the table's field names
 			$updateQuery = "UPDATE " . static::$table . 
 								" SET name= :name, location= :location, date_established= :date_est, 
 									area_in_acres= :area, description= :description
@@ -106,14 +119,24 @@
         	// You will need to iterate through all the attributes to bind the placeholder variables in the prepared query to their values
 	        // foreach($this->attributes as $key => $value) {
 
-    		$update->bindValue(":name", $this->attributes["name"], PDO::PARAM_STR);
-			$update->bindValue(":location", $this->attributes["location"], PDO::PARAM_STR);
-			$update->bindValue(":date_est", $this->attributes["date"], PDO::PARAM_STR);
-			$update->bindValue(":area", $this->attributes["area"], PDO::PARAM_STR);
-			$update->bindValue(":description", $this->attributes["description"], PDO::PARAM_STR);
-			$update->bindValue(":id", $this->attributes["id"], PDO::PARAM_INT);
+    		$update->bindValue(":name", $this->name, PDO::PARAM_STR);
+			$update->bindValue(":location", $this->location, PDO::PARAM_STR);
+			$update->bindValue(":date_est", $this->date, PDO::PARAM_STR);
+			$update->bindValue(":area", $this->area, PDO::PARAM_STR);
+			$update->bindValue(":description", $this->description, PDO::PARAM_STR);
+			$update->bindValue(":id", $this->id, PDO::PARAM_INT);
 			$update->execute();
 	        	
+		}
+
+		// Get an array of all the field names in the table, but remove the id field
+		public static function getColumnNames()
+		{
+			self::dbConnect();
+			$stmt = self::$dbc->query("DESCRIBE " . static::$table);
+			$table_fields = $stmt->fetchAll(PDO::FETCH_COLUMN);
+			unset($table_fields[0]);
+			// print_r($table_fields);
 		}
 
 	    // Find a record based on an id
@@ -152,7 +175,7 @@
 
 	// Test class:
 	// $blah = new Model();
-	// $blah->name = "Mrs. Blah";
+	// $blah->name = "Blah Jr.";
 	// $blah->location = "Canada";
 	// $blah->date = "2015-04-11";
 	// $blah->area = "0.5";
@@ -161,7 +184,9 @@
 	// $blah->save();
 	
 	// print_r(Model::find('22'));
-	print_r(Model::all());
+	// print_r(Model::all());
 
 	// print_r($AishaTyler->attributes);
+
+	Model::getColumnNames();
 	
