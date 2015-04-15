@@ -69,33 +69,24 @@
 	        	// Get column names as an array, create a duplicate for prepared statement placeholders
 				$columns = array_keys($this->attributes);
 				$columnsPlaceholders = $columns;
-				// $columns = implode(',', $columns);	// creates a string of comma-separated column names
 
-				// Concatinate a colon to the front of each of the placeholders for use in the query
+				// Put a colon on the front of each of the placeholders for use in the query
 				array_walk($columnsPlaceholders, function(&$value, $key) {$value = ':' . $value;});
 
-				// $columnsPlaceholders = implode(',', $columnsPlaceholders);	// creates a string of comma-separated placeholder names, after the colons have been added to the front of them
-	        	$this->update($columns, $columnsPlaceholders);
 	        	// Perform the proper action - if the `id` is set, this is an update, if not it is a insert
 		        // Attempt to insert, but if a 'duplicate' exception is thrown, attempt to update intead
-		        // if (!isset($this->id)) {
-		        // 	$this->insert($columns, $columnsPlaceholders);
-		        // } else {
-		        // 	$this->update($columns, $columnsPlaceholders);
-		        // }
+		        if (!isset($this->id)) {
+		        	$this->insert($columns, $columnsPlaceholders);
+		        } else {
+		        	$this->update($columns, $columnsPlaceholders);
+		        }
 			}
 		}
 
 		public function insert($columns, $columnsPlaceholders)
 		{
-			// // Get column names as an array, create a duplicate for prepared statement placeholders
-			// $columns = array_keys($this->attributes);
-			// $columnsPlaceholders = $columns;
 			$columns = implode(',', $columns);	// creates a string of comma-separated column names
-
-			// // Go through the placeholders array and put a colon on the front of each of the values for use in the query
-			// array_walk($columnsPlaceholders, function(&$value, $key) {$value = ':' . $value;});
-			$columnsPlaceholders = implode(',', $columnsPlaceholders);	// creates a string of comma-separated placeholder names, after the colons have been added to the front of them
+			$columnsPlaceholders = implode(',', $columnsPlaceholders);	// creates a string of comma-separated placeholder names
 
         	// Use prepared statements to ensure data security
         	$insertQuery = "INSERT INTO " . static::$table . " (" . $columns . ") 
@@ -127,9 +118,8 @@
 
 
 			// Combine the columns and placeholders array into a single array where the columns are the keys and the placeholders are the values
-			// Create an empty variable to concatinate onto when looping through the combined array
 			$combinedArray = array_combine($columns, $columnsPlaceholders);
-			$set = '';
+			$set = '';	// an empty variable to concatinate onto in the foreach loop
 			
 			foreach ($combinedArray as $key => $value) {
 				$set .= "$key = $value "; 
