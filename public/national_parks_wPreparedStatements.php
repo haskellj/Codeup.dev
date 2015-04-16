@@ -47,19 +47,10 @@
 		try {
 			// Re-format the user inputted date to the correct format, using PHP library functions, before passing to MySQL 
 			// If date field is left blank by the user, default to today's date
-			if (!empty($_POST['dateEstablished'])) {
-				$userDate = date_create(Input::getString('dateEstablished'));
-				if (!$userDate) {
-					throw new exception ("Date must be in the format YYYY-MM-DD"); 
-				} else {
-					$newDate = date_format($userDate, 'Y-m-d');
-				}
-			} else {
-				$newDate = date('Y-m-d');
-			}
+			$newDate = Input::getDate('dateEstablished');
+
 		} catch (Exception $e) {
-			$errors[] = $e->getMessage();
-			$message = $e->getMessage();
+			$errors[] = $message = $e->getMessage();
 			$errorMessages['date'] = $message;
 			// echo "<script type='text/javascript'>alert('$message');</script>";
 		}

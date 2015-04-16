@@ -47,6 +47,22 @@ class Input
         return (float)$keyValue;
     }
 
+    public static function getDate($key)
+    {
+        // Re-format the user inputted date to the correct format, using PHP library functions, before passing to MySQL 
+        // If date field is left blank by the user, default to today's date
+        if (!empty($_POST[$key])) {
+            $userDate = date_create($_POST[$key]);
+            if (!$userDate) {
+                throw new exception ("Invalid date; must be in the format: YYYY-MM-DD."); 
+            } else {
+               return $newDate = date_format($userDate, 'Y-m-d');
+            }
+        } else {
+            return $newDate = date('Y-m-d');
+        }
+    }
+
     ///////////////////////////////////////////////////////////////////////////
     //                      DO NOT EDIT ANYTHING BELOW!!                     //
     // The Input class should not ever be instantiated, so we prevent the    //
