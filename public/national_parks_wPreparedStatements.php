@@ -8,28 +8,52 @@
 	require '../db_connect.php';
 	require '../Input.php';
 
-	// initialize an array to catch all the error messages
+	// initialize an array to catch all the generic errors, and another to hold any custom messages for display
 	$errors = [];
+	$errorMessages = ['park'=>'', 'state'=>'', 'area'=>'', 'description'=>'', 'date'=>''];
 
 	// Retrieve and sanitize user input into 'Add a Park' form
 	if (!empty($_POST)) {
 		try {
 			$newPark = Input::getString('parkName');
+		} catch (Exception $e) {
+			$message = "Park Name must be alphanumeric.";
+			$errorMessages['park'] = $message;
+		}
+		try {
 			$newState = Input::getString('parkState');
+		} catch (Exception $e) {
+			$message = "State cannot contain numbers or symbols.";
+			$errorMessages['state'] = $message;
+		}
+		try {
 			$newArea = !empty($_POST['areaInAcres']) ? Input::getNumber('areaInAcres') : 0;
+		} catch (Exception $e) {
+			$message = "Area must be a number.";
+			$errorMessages['area'] = $message;
+		}
+		try {
 			$newDesc = Input::getString('aboutPark');
-		
+		} catch (Exception $e) {
+			$message = "Park Description must be alphanumeric.";
+			$errorMessages['description'] = $message;
+		}
+		try {
 			// Re-format the user inputted date to the correct format, using PHP library functions, before passing to MySQL 
 			// If date field is left blank by the user, default to today's date
 			if (!empty($_POST['dateEstablished'])) {
-				$userDate = date_create($_POST['dateEstablished']);
-				$newDate = date_format($userDate, 'Y-m-d');
+				$userDate = date_create(Input::getString('dateEstablished'));
+				if (!$userDate) {
+					throw new exception ("Date must be in the format YYYY-MM-DD"); 
+				} else {
+					$newDate = date_format($userDate, 'Y-m-d');
+				}
 			} else {
 				$newDate = date('Y-m-d');
 			}
 		} catch (Exception $e) {
 			$message = $e->getMessage();
-			$errors[] = $message;
+			$errorMessages['date'] = $message;
 			// echo "<script type='text/javascript'>alert('$message');</script>";
 		}
 	
@@ -137,33 +161,34 @@
 	</div>
 	<br>
 	<div id='form'>
-		<?php if (!empty($errors)) { ?>
-			<ul>
-			<?php foreach($errors as $error){ ?>
-				<li> <?= $error; ?> </li>
-			<?php } ?>
-			</ul>
-		<?php } ?>
+		<!-- <?php if (!empty($errors)) { ?> -->
+			<!-- <ul> -->
+			<!-- <?php foreach($errors as $error){ ?> -->
+				<!-- <li> <?= $error; ?> </li> -->
+			<!-- <?php } ?> -->
+			<!-- </ul> -->
+		<!-- <?php } ?> -->
 		<h2>Add a Park</h2>
-		<form method="POST" action="national_parks_wPreparedStatements.php">
+		<form id="addPark" method="POST" action="#addPark">
 			<p>
 			<label for='name'></label>
-			<input type='text' id='name' name='parkName' placeholder='Park Name' required>*
+			<input type='text' id='name' name='parkName' placeholder='Park Name' required>* <?= $errorMessages['park'] ?>
 			</p>
 			<p>
 			<label for='location'></label>
-			<input type='text' id='location' name='parkState' placeholder="State where located" required>*
+			<input type='text' id='location' name='parkState' placeholder="State where located" required>* <?= $errorMessages['state'] ?>
 			</p>
 			<p>
 			<label for='date'></label>
-			<input type='text' id='date' name='dateEstablished' placeholder='Date established: YYY-MM-DD'>
+			<input type='text' id='date' name='dateEstablished' placeholder='Date established'> <?= $errorMessages['date'] ?>
 			</p>
 			<p>
 			<label for='area'></label>
-			<input type='text' id='area' name='areaInAcres' placeholder='Area in acres'>		
+			<input type='text' id='area' name='areaInAcres' placeholder='Area (in acres)'> <?= $errorMessages['area'] ?>		
 			</p>
 			<label for='description'></label>
-			<textarea type='text' id='description' name='aboutPark' rows='10' cols='125' placeholder= 'Describe this park' required></textarea>*<br>		
+			<textarea type='text' id='description' name='aboutPark' rows='10' cols='125' placeholder= 'Description of park' required></textarea>* <?= $errorMessages['description'] ?>
+			<br>		
 			<input type='submit'>
 			<h6>* indicates a required field</h6>
 		</form>
