@@ -14,14 +14,14 @@
 	if(isset($_POST['submit'])) {
   		$savedInput = array_replace($savedInput, $_POST);	// replace initial values of user input array with $_POST data
 	}
-	print_r($savedInput);
+
 
 	// initialize an array to catch all the generic errors, and another to hold any custom messages for display
 	$errors = [];
 	$errorMessages = ['park'=>'', 'state'=>'', 'area'=>'', 'description'=>'', 'date'=>''];
 
 
-	// Retrieve and sanitize user input into 'Add a Park' form
+	// Retrieve and sanitize user input into 'Add a Park' form, retrieve and display any errors that occur
 	if (!empty($_POST)) {
 		try {
 			$newPark = Input::getString('parkName');
@@ -62,8 +62,9 @@
 			// echo "<script type='text/javascript'>alert('$message');</script>";
 		}
 	
+		// If no errors occur, go ahead and insert the form into the database
 		if (empty($errors)) {
-			// Add to database with user input from the form
+
 			$userInput = "INSERT INTO national_parks (name, location, date_established, area_in_acres, description)
 							VALUES (:name, :location, :date_est, :area, :description)";
 			$insert = $dbc->prepare($userInput);
@@ -77,7 +78,7 @@
 		}
 	}
 
-
+	// Pagination logic for links below table of parks
 	$totalParks = $dbc->query("SELECT count(*) FROM national_parks")->fetchColumn();
 	$perPage = (isset($_GET['per-page'])) ? (int)$_GET['per-page'] : 4;
 	$totalPages = ceil($totalParks / $perPage);
@@ -87,7 +88,7 @@
 	} else {
 			$page = (int)$_GET['page'];
 		}
-	// $page = (isset($_GET['page']) && $_GET['page'] <= $totalPages && $_GET['page'] > 0 && is_numeric($_GET['page'])) ? (int)$_GET['page'] : 1;
+
 	$offset = ($page > 1) ? $page * $perPage - $perPage : 0;
 	$next = $page + 1;
 	$previous = $page - 1;
@@ -163,6 +164,8 @@
 		<?php } ?>
 	</div>
 	<br>
+
+	<!-- Form Field to Add a New Park -->
 	<div id='form'>
 		<h2>Add a Park</h2>
 		<form id="addPark" method="POST" action="#addPark">
@@ -188,9 +191,6 @@
 			<input type='submit' name="submit">
 			<h6>* indicates a required field</h6>
 		</form>
-		
 	</div>
-
-
 </body>
 </html>
