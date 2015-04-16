@@ -8,6 +8,13 @@
 	require '../db_connect.php';
 	require '../Input.php';
 
+	// Array to hold user input in case of errors
+	$savedInput = ['parkName'=>'', 'parkState'=>'', 'areaInAcres'=>'', 'dateEstablished'=>'', 'aboutPark'=>''];
+	// if there is data submited from form, save it to the array above
+	if(isset($_POST['submit'])) {
+  		$savedInput = array_replace($savedInput, $_POST);	// replace initial values of user input array with $_POST data
+	}
+	print_r($savedInput);
 
 	// initialize an array to catch all the generic errors, and another to hold any custom messages for display
 	$errors = [];
@@ -91,8 +98,6 @@
 	$parks->bindValue(':offset', $offset, PDO::PARAM_INT);
 	$parks->execute();
 
-
-
 ?>
 
 <!DOCTYPE html>
@@ -159,35 +164,28 @@
 	</div>
 	<br>
 	<div id='form'>
-		<!-- <?php if (!empty($errors)) { ?> -->
-			<!-- <ul> -->
-			<!-- <?php foreach($errors as $error){ ?> -->
-				<!-- <li> <?= $error; ?> </li> -->
-			<!-- <?php } ?> -->
-			<!-- </ul> -->
-		<!-- <?php } ?> -->
 		<h2>Add a Park</h2>
 		<form id="addPark" method="POST" action="#addPark">
 			<p>
 			<label for='name'></label>
-			<input type='text' id='name' name='parkName' placeholder='Park Name' required>* <?= $errorMessages['park'] ?>
+			<input type='text' id='name' name='parkName' value="<?= $savedInput['parkName']; ?>" placeholder='Park Name' required>* <?= $errorMessages['park'] ?>
 			</p>
 			<p>
 			<label for='location'></label>
-			<input type='text' id='location' name='parkState' placeholder="State where located" required>* <?= $errorMessages['state'] ?>
+			<input type='text' id='location' name='parkState' value="<?= $savedInput['parkState']; ?>" placeholder="State where located" required>* <?= $errorMessages['state'] ?>
 			</p>
 			<p>
 			<label for='date'></label>
-			<input type='text' id='date' name='dateEstablished' placeholder='Date established'> <?= $errorMessages['date'] ?>
+			<input type='text' id='date' name='dateEstablished' value="<?= $savedInput['dateEstablished']; ?>" placeholder='Date established'> <?= $errorMessages['date'] ?>
 			</p>
 			<p>
 			<label for='area'></label>
-			<input type='text' id='area' name='areaInAcres' placeholder='Area (in acres)'> <?= $errorMessages['area'] ?>		
+			<input type='text' id='area' name='areaInAcres' value="<?= $savedInput['areaInAcres']; ?>" placeholder='Area (in acres)'> <?= $errorMessages['area'] ?>		
 			</p>
 			<label for='description'></label>
-			<textarea type='text' id='description' name='aboutPark' rows='10' cols='125' placeholder= 'Description of park' required></textarea>* <?= $errorMessages['description'] ?>
+			<textarea type='text' id='description' name='aboutPark' rows='10' cols='125' placeholder= 'Description of park' required><?= $savedInput['aboutPark']; ?></textarea>* <?= $errorMessages['description'] ?>
 			<br>		
-			<input type='submit'>
+			<input type='submit' name="submit">
 			<h6>* indicates a required field</h6>
 		</form>
 		
