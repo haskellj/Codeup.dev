@@ -25,23 +25,55 @@ class Input
         return isset($_REQUEST[$key]) ? $_REQUEST[$key] : $default; 
     }
 
-    public static function getString($key)
+    public static function getString($key, $min = null, $max = null)
     {
         $keyValue = self::get($key);
 
+        if(empty($key)){
+            throw new OutOfRangeException("A key was not provided.");
+        }
+
+        if(!is_string($key)) {
+            throw new InvalidArgumentException("$key must be a string.");
+        }
+
+        if(!is_numeric($min) || !is_numeric($max)){
+            throw new InvalidArgumentException("Minimum and Maximum must be numbers.");
+        }
+
         if(!is_string($keyValue) || !isset($keyValue) || is_numeric($keyValue)){
-            throw new exception ("$key must be a string!");
+            throw new DomainException("$key input must be a string!");
+        }
+
+        if(strlen($keyValue) < $min || strlen($keyValue) > $max){
+            throw new LengthException("$key input must be between $min and $max characters long.");
         }
 
         return trim($keyValue);
     }
 
-    public static function getNumber($key)
+    public static function getNumber($key, $min = null, $max = null)
     {
         $keyValue = trim(self::get($key));
 
+        if(empty($key)){
+            throw new OutOfRangeException("A key was not provided.");
+        }
+
+        if(!is_string($key)) {
+            throw new InvalidArgumentException("$key must be a string.");
+        }
+
+        if(!is_numeric($min) || !is_numeric($max)){
+            throw new InvalidArgumentException("Minimum and Maximum must be numbers.");
+        }
+
         if(!is_numeric($keyValue) || !isset($keyValue)){
-            throw new exception ("$key must be a number!");
+            throw new exception ("Key $key must be a number!");
+        }
+
+        if(isset($min) && isset($max) && (strlen($keyValue) < $min || strlen($keyValue) > $max)){
+            throw new RangeException("$key input must be between $min and $max.");
         }
 
         return (float)$keyValue;

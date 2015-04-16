@@ -24,33 +24,75 @@
 	// Retrieve and sanitize user input into 'Add a Park' form, retrieve and display any errors that occur
 	if (!empty($_POST)) {
 		try {
-			$newPark = Input::getString('parkName');
+			$newPark = Input::getString('parkName', 3, 50);
+		} catch (OutOfRangeException $e) {
+			$errors[] = $e->getMessage();
+			$errorMessages['park'] = "A key was not provided";
+		} catch (InvalidArgumentException $e) {
+			$errors[] = $e->getMessage();
+			$errorMessages['park'] = "Key $key must be a string.";
+		} catch (DomainException $e) {
+			$errors[] = $e->getMessage();
+			$errorMessages['park'] = "Input must be a string.";
+		} catch (LengthException $e) {
+			$errors[] = $e->getMessage();
+			$errorMessages['park'] = "Name must be between 3 and 50 characters long.";
 		} catch (Exception $e) {
 			$errors[] = $e->getMessage();
-			$message = "Park Name must be alphanumeric.";
-			$errorMessages['park'] = $message;
+			$errorMessages['park'] = "Park Name must be alphanumeric.";
 		}
+
 		try {
-			$newState = Input::getString('parkState');
+			$newState = Input::getString('parkState', 2, 25);
+		} catch (OutOfRangeException $e) {
+			$errors[] = $e->getMessage();
+			$errorMessages['state'] = "A key was not provided";
+		} catch (InvalidArgumentException $e) {
+			$errors[] = $e->getMessage();
+			$errorMessages['state'] = "Key $key must be a string.";
+		} catch (DomainException $e) {
+			$errors[] = $e->getMessage();
+			$errorMessages['state'] = "Input must be a string.";
+		} catch (LengthException $e) {
+			$errors[] = $e->getMessage();
+			$errorMessages['state'] = "State must be between 2 and 25 characters long.";
 		} catch (Exception $e) {
 			$errors[] = $e->getMessage();
-			$message = "State cannot contain numbers or symbols.";
-			$errorMessages['state'] = $message;
+			$errorMessages['state'] = "State cannot contain numbers or symbols.";
 		}
+
 		try {
 			$newArea = !empty($_POST['areaInAcres']) ? Input::getNumber('areaInAcres') : 0;
+		} catch (OutOfRangeException $e) {
+			$errors[] = $e->getMessage();
+			$errorMessages['area'] = "A key was not provided";
+		} catch (InvalidArgumentException $e) {
+			$errors[] = $e->getMessage();
+			$errorMessages['area'] = $e->getMessage();
 		} catch (Exception $e) {
 			$errors[] = $e->getMessage();
-			$message = "Area must be a number.";
-			$errorMessages['area'] = $message;
+			$errorMessages['area'] = "Area must be a number.";
 		}
+
 		try {
-			$newDesc = Input::getString('aboutPark');
+			$newDesc = Input::getString('aboutPark', 1, 500);
+		} catch (OutOfRangeException $e) {
+			$errors[] = $e->getMessage();
+			$errorMessages['description'] = "A key was not provided";
+		} catch (InvalidArgumentException $e) {
+			$errors[] = $e->getMessage();
+			$errorMessages['description'] = "Key $key must be a string.";
+		} catch (DomainException $e) {
+			$errors[] = $e->getMessage();
+			$errorMessages['description'] = "Input must be a string.";
+		} catch (LengthException $e) {
+			$errors[] = $e->getMessage();
+			$errorMessages['description'] = "Description must be less than 500 characters long.";
 		} catch (Exception $e) {
 			$errors[] = $e->getMessage();
-			$message = "Park Description must be alphanumeric.";
-			$errorMessages['description'] = $message;
+			$errorMessages['description'] = "Park Description must be alphanumeric.";
 		}
+		
 		try {
 			// Re-format the user inputted date to the correct format, using PHP library functions, before passing to MySQL 
 			// If date field is left blank by the user, default to today's date
@@ -62,6 +104,7 @@
 			// echo "<script type='text/javascript'>alert('$message');</script>";
 		}
 	
+
 		// If no errors occur, go ahead and insert the form into the database
 		if (empty($errors)) {
 
