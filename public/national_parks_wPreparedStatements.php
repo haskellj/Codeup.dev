@@ -8,33 +8,39 @@
 	require '../db_connect.php';
 	require '../Input.php';
 
+
 	// initialize an array to catch all the generic errors, and another to hold any custom messages for display
 	$errors = [];
 	$errorMessages = ['park'=>'', 'state'=>'', 'area'=>'', 'description'=>'', 'date'=>''];
+
 
 	// Retrieve and sanitize user input into 'Add a Park' form
 	if (!empty($_POST)) {
 		try {
 			$newPark = Input::getString('parkName');
 		} catch (Exception $e) {
+			$errors[] = $e->getMessage();
 			$message = "Park Name must be alphanumeric.";
 			$errorMessages['park'] = $message;
 		}
 		try {
 			$newState = Input::getString('parkState');
 		} catch (Exception $e) {
+			$errors[] = $e->getMessage();
 			$message = "State cannot contain numbers or symbols.";
 			$errorMessages['state'] = $message;
 		}
 		try {
 			$newArea = !empty($_POST['areaInAcres']) ? Input::getNumber('areaInAcres') : 0;
 		} catch (Exception $e) {
+			$errors[] = $e->getMessage();
 			$message = "Area must be a number.";
 			$errorMessages['area'] = $message;
 		}
 		try {
 			$newDesc = Input::getString('aboutPark');
 		} catch (Exception $e) {
+			$errors[] = $e->getMessage();
 			$message = "Park Description must be alphanumeric.";
 			$errorMessages['description'] = $message;
 		}
@@ -52,6 +58,7 @@
 				$newDate = date('Y-m-d');
 			}
 		} catch (Exception $e) {
+			$errors[] = $e->getMessage();
 			$message = $e->getMessage();
 			$errorMessages['date'] = $message;
 			// echo "<script type='text/javascript'>alert('$message');</script>";
