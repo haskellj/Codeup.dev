@@ -37,8 +37,8 @@ class Input
             throw new InvalidArgumentException("$key must be a string.");
         }
 
-        if(!is_numeric($min) || !is_numeric($max)){
-            throw new InvalidArgumentException("Minimum and Maximum must be numbers.");
+        if(isset($min) && isset($max) && (!is_int($max) || !is_int($min))){
+            throw new InvalidArgumentException("Minimum and Maximum must be integers.");
         }
 
         if(!is_string($keyValue) || !isset($keyValue) || is_numeric($keyValue)){
@@ -83,8 +83,8 @@ class Input
     {
         // Re-format the user inputted date to the correct format, using PHP library functions, before passing to MySQL 
         // If date field is left blank by the user, default to today's date
-        if (!empty($_POST[$key])) {
-            $userDate = date_create($_POST[$key]);
+        if (self::get($key)) {
+            $userDate = date_create(trim(self::get($key)));
             if (!$userDate) {
                 throw new exception ("Invalid date; must be in the format: YYYY-MM-DD."); 
             } else {
