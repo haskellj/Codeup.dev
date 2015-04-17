@@ -230,26 +230,21 @@
 		<h2>Add a Park</h2>
 		<form id="addPark" method="POST" action="#addPark">
 			<p>
-			<label for='name'></label>
 			<input type='text' id='name' name='parkName' value="<?= $savedInput['parkName']; ?>" placeholder='Park Name' required>
 				<span class="error">* <?= $errorMessages['park'] ?></span>
 			</p>
 			<p>
-			<label for='location'></label>
 			<input type='text' id='location' name='parkState' value="<?= $savedInput['parkState']; ?>" placeholder="State where located" required> 
 				<span class="error">* <?= $errorMessages['state'] ?></span>
 			</p>
 			<p>
-			<label for='date'></label>
 			<input type='text' id='date' name='dateEstablished' value="<?= $savedInput['dateEstablished']; ?>" placeholder='Date established'> 
 				<span class="error"><?= $errorMessages['date'] ?></span>
 			</p>
 			<p>
-			<label for='area'></label>
 			<input type='text' id='area' name='areaInAcres' value="<?= $savedInput['areaInAcres']; ?>" placeholder='Area (in acres)'> 
 			<span class="error"><?= $errorMessages['area'] ?></span>		
 			</p>
-			<label for='description'></label>
 			<textarea type='text' id='description' name='aboutPark' rows='10' cols='125' placeholder= 'Description of park' required><?= $savedInput['aboutPark']; ?></textarea> 
 				<span class="error">* <?= $errorMessages['description'] ?></span>
 			<br>		
