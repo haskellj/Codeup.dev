@@ -23,8 +23,11 @@
 
 	// Retrieve and sanitize user input into 'Add a Park' form, retrieve and display any errors that occur
 	if (!empty($_POST)) {
+		
 		try {
+			
 			$newPark = Input::getString('parkName', 3, 50);
+		
 		} catch (OutOfRangeException $e) {
 			$errors[] = $e->getMessage();
 			$errorMessages['park'] = "A key was not provided";
@@ -43,7 +46,9 @@
 		}
 
 		try {
-			$newState = Input::getString('parkState', 2, 25);
+			
+			$newState = Input::getString('parkState', 2, 14);
+		
 		} catch (OutOfRangeException $e) {
 			$errors[] = $e->getMessage();
 			$errorMessages['state'] = "A key was not provided";
@@ -55,14 +60,16 @@
 			$errorMessages['state'] = "Input must be a string.";
 		} catch (LengthException $e) {
 			$errors[] = $e->getMessage();
-			$errorMessages['state'] = "State must be between 2 and 25 characters long.";
+			$errorMessages['state'] = "State must be between 2 and 14 characters long.";
 		} catch (Exception $e) {
 			$errors[] = $e->getMessage();
 			$errorMessages['state'] = "State cannot contain numbers or symbols.";
 		}
 
 		try {
+		
 			$newArea = !empty($_POST['areaInAcres']) ? Input::getNumber('areaInAcres') : 0;
+		
 		} catch (OutOfRangeException $e) {
 			$errors[] = $e->getMessage();
 			$errorMessages['area'] = "A key was not provided";
@@ -75,7 +82,9 @@
 		}
 
 		try {
+			
 			$newDesc = Input::getString('aboutPark', 1, 500);
+		
 		} catch (OutOfRangeException $e) {
 			$errors[] = $e->getMessage();
 			$errorMessages['description'] = "A key was not provided";
@@ -92,10 +101,10 @@
 			$errors[] = $e->getMessage();
 			$errorMessages['description'] = "Park Description must be alphanumeric.";
 		}
-		
+
 		try {
-			// Re-format the user inputted date to the correct format, using PHP library functions, before passing to MySQL 
-			// If date field is left blank by the user, default to today's date
+			// getDate() re-formats the user inputted date to the correct format, using PHP library functions, before passing to MySQL 
+			// If date field is left blank by the user, it will default to today's date
 			$newDate = Input::getDate('dateEstablished');
 
 		} catch (Exception $e) {
@@ -161,10 +170,16 @@
 		table, th, td, #form {
 		    border: 1px solid black;
 		}
+
+		.error {
+			color: red;
+			font-weight: bold;
+		}
 	</style>
 </head>
 <body>
-	<!-- Table Displaying Parks -->
+
+	<!------------------- Table Displaying Parks -------------------->
 	<table>
 		<thead>
 			<th>Name</th>
@@ -186,6 +201,8 @@
 		</tbody>
 	</table>
 	<br>
+
+	<!------------------ Pagination Buttons/Links ------------------>
 	<div id="pageControls">
 		<!-- Previous Button -->
 		<?php if ($page > 1) { ?>
@@ -208,28 +225,33 @@
 	</div>
 	<br>
 
-	<!-- Form Field to Add a New Park -->
+	<!----------------------- Form Field to Add a New Park ---------------------->
 	<div id='form'>
 		<h2>Add a Park</h2>
 		<form id="addPark" method="POST" action="#addPark">
 			<p>
 			<label for='name'></label>
-			<input type='text' id='name' name='parkName' value="<?= $savedInput['parkName']; ?>" placeholder='Park Name' required>* <?= $errorMessages['park'] ?>
+			<input type='text' id='name' name='parkName' value="<?= $savedInput['parkName']; ?>" placeholder='Park Name' required>
+				<span class="error">* <?= $errorMessages['park'] ?></span>
 			</p>
 			<p>
 			<label for='location'></label>
-			<input type='text' id='location' name='parkState' value="<?= $savedInput['parkState']; ?>" placeholder="State where located" required>* <?= $errorMessages['state'] ?>
+			<input type='text' id='location' name='parkState' value="<?= $savedInput['parkState']; ?>" placeholder="State where located" required> 
+				<span class="error">* <?= $errorMessages['state'] ?></span>
 			</p>
 			<p>
 			<label for='date'></label>
-			<input type='text' id='date' name='dateEstablished' value="<?= $savedInput['dateEstablished']; ?>" placeholder='Date established'> <?= $errorMessages['date'] ?>
+			<input type='text' id='date' name='dateEstablished' value="<?= $savedInput['dateEstablished']; ?>" placeholder='Date established'> 
+				<span class="error"><?= $errorMessages['date'] ?></span>
 			</p>
 			<p>
 			<label for='area'></label>
-			<input type='text' id='area' name='areaInAcres' value="<?= $savedInput['areaInAcres']; ?>" placeholder='Area (in acres)'> <?= $errorMessages['area'] ?>		
+			<input type='text' id='area' name='areaInAcres' value="<?= $savedInput['areaInAcres']; ?>" placeholder='Area (in acres)'> 
+			<span class="error"><?= $errorMessages['area'] ?></span>		
 			</p>
 			<label for='description'></label>
-			<textarea type='text' id='description' name='aboutPark' rows='10' cols='125' placeholder= 'Description of park' required><?= $savedInput['aboutPark']; ?></textarea>* <?= $errorMessages['description'] ?>
+			<textarea type='text' id='description' name='aboutPark' rows='10' cols='125' placeholder= 'Description of park' required><?= $savedInput['aboutPark']; ?></textarea> 
+				<span class="error">* <?= $errorMessages['description'] ?></span>
 			<br>		
 			<input type='submit' name="submit">
 			<h6>* indicates a required field</h6>

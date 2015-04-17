@@ -20,12 +20,12 @@ class Input
      * @param mixed $default default value to return if key not found
      * @return mixed value passed in request
      */
-    public static function get($key, $default = null)
+    public static function get($key, $default = NULL)
     {
         return isset($_REQUEST[$key]) ? $_REQUEST[$key] : $default; 
     }
 
-    public static function getString($key, $min = null, $max = null)
+    public static function getString($key, $min = NULL, $max = NULL)
     {
         $keyValue = self::get($key);
 
@@ -52,7 +52,7 @@ class Input
         return trim($keyValue);
     }
 
-    public static function getNumber($key, $min = null, $max = null)
+    public static function getNumber($key, $min = NULL, $max = NULL)
     {
         $keyValue = trim(self::get($key));
 
@@ -64,8 +64,8 @@ class Input
             throw new InvalidArgumentException("$key must be a string.");
         }
 
-        if(!is_numeric($min) || !is_numeric($max)){
-            throw new InvalidArgumentException("Minimum and Maximum must be numbers.");
+        if(isset($min) && isset($max) && (!is_int($max) || !is_int($min))){
+            throw new InvalidArgumentException("Minimum and Maximum must be integers.");
         }
 
         if(!is_numeric($keyValue) || !isset($keyValue)){
